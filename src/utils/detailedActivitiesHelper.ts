@@ -1,6 +1,10 @@
 import { Grade, LessonActivity } from "../types";
 import { buildPedagogicalActivities } from "./pedagogicalActivityBuilder";
 import { getTrafficSafetyForWeek } from "../data/trafficSafetyData";
+import {
+  getRequiredTeacherMaterialsForLesson,
+  getRequiredStudentMaterialsForLesson,
+} from "./materialsHelper";
 
 /**
  * Detailed activities generator for Lesson Plans (KHBD)
@@ -46,12 +50,8 @@ export function getDetailedActivitiesForLesson(
           "Rèn luyện kỹ năng sinh hoạt tập thể, lắng nghe phát động chủ đề năm học mới của Liên đội và BGH nhà trường.",
           "Tự giác chuẩn bị trang phục chỉnh tề, thực hiện đúng nội quy chào cờ và tự tin giao lưu cùng thầy cô, bạn bè."
         ],
-        teacherMaterials: [
-          "Kế hoạch tuần, sổ chủ nhiệm, bài phát động thi đua, hệ thống âm thanh, cờ Tổ quốc."
-        ],
-        studentMaterials: [
-          "Trang phục chỉnh tề (áo đồng phục trắng, khăn quàng đỏ, bảng tên), ghế ngồi theo quy định."
-        ],
+        teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+        studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
         act1Teacher: "Hướng dẫn học sinh tập hợp theo hàng lối ngay ngắn, chỉnh đốn trang phục. Phối hợp với Tổng phụ trách Đội điều hành nghi lễ Chào cờ toàn trường (Nghiêm - Chào cờ - Quốc ca - Đội ca). Lắng nghe BGH nhà trường phát biểu chào mừng năm học mới.",
         act1Student: "Đứng nghiêm trang hướng về Quốc kỳ, hát vang Quốc ca và Đội ca với tinh thần tự hào dân tộc. Chú ý lắng nghe thông điệp chào mừng năm học mới của Ban Giám hiệu.",
         act2Teacher: "Tổng phụ trách và GVCN điều hành chương trình giao lưu 'Chào năm học mới': Các tiết mục văn nghệ chào mừng của đội văn nghệ măng non; mời đại diện học sinh khối 5 phát biểu lời hứa quyết tâm năm học cuối cấp tiểu học.",
@@ -74,10 +74,10 @@ export function getDetailedActivitiesForLesson(
           `Tự đánh giá hoạt động học tập, nề nếp trong tuần; thống nhất phương hướng tuần tới. Tham gia sinh hoạt chủ đề tích cực. ${atgt.lesson.competencies}`
         ],
         teacherMaterials: [
-          `Sổ chủ nhiệm, bảng tổng hợp thi đua tuần qua, kế hoạch tuần tới, video clip/hình ảnh tư liệu: ${atgt.lesson.lessonTitle}.`
+          `Sổ chủ nhiệm, bảng tổng hợp thi đua tuần qua, kế hoạch tuần tới, video clip/hình ảnh tư liệu chuyên đề: ${atgt.lesson.lessonTitle}.`
         ],
         studentMaterials: [
-          `Sổ theo dõi cán sự lớp, phiếu tự đánh giá, tài liệu An toàn giao thông ${grade}.`
+          `Sổ theo dõi cán sự lớp, phiếu tự đánh giá rèn luyện cá nhân tuần qua, tài liệu An toàn giao thông ${grade}.`
         ],
         act1Teacher: `Bắt nhịp bài hát tập thể vui nhộn; trình chiếu video ngắn về tình huống giao thông liên quan đến '${atgt.lesson.lessonTitle}' để dẫn dắt sinh hoạt.`,
         act1Student: "Cả lớp hát vang và vỗ tay theo nhịp; quan sát video và hào hứng hưởng ứng.",
@@ -103,13 +103,8 @@ export function getDetailedActivitiesForLesson(
           "Hiểu nội dung bài đọc: Cảm nhận vẻ đẹp phong phú, sinh động của thiên nhiên qua những âm thanh kỳ diệu của tiếng gió; cảm nhận tình yêu cuộc sống và sự gắn bó với quê hương của tác giả.",
           "Biết nhận diện và chia sẻ về các âm thanh tự nhiên quen thuộc xung quanh môi trường sống."
         ],
-        teacherMaterials: [
-          "SGK Tiếng Việt 5, bài giảng điện tử tương tác có tích hợp file âm thanh tiếng gió (vi vu, xào xạc, ào ào), tranh minh họa bài đọc.",
-          "Phiếu học tập đọc hiểu, máy chiếu."
-        ],
-        studentMaterials: [
-          "SGK Tiếng Việt 5, vở ghi, bút chì, thước kẻ."
-        ],
+        teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+        studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
         act1Teacher: "Cho học sinh nhắm mắt trong 30 giây, lắng nghe đoạn âm thanh tiếng gió thổi rì rào qua rặng tre và tiếng gió vi vu trên cánh đồng. Hỏi: 'Em vừa nghe thấy âm thanh gì? Âm thanh đó gợi cho em cảm xúc gì?' Dẫn dắt giới thiệu bài đọc 'Thanh âm của gió'.",
         act1Student: "Nhắm mắt lắng nghe, hào hứng đoán âm thanh: 'Đó là tiếng gió thổi'. Nêu cảm nhận: 'Âm thanh nghe rất êm dịu, mát mẻ, gợi nhớ cảnh đồng quê'. Mở SGK trang 10.",
         act2Teacher: "- Đọc mẫu toàn bài: giọng đọc thong thả, tha thiết, nhấn giọng ở các từ ngữ gợi âm thanh: vi vu, xào xạc, ào ào, réo rắt...\n- Hướng dẫn chia đoạn: 3 đoạn (Đoạn 1: Từ đầu đến 'giọng của gió'; Đoạn 2: Tiếp theo đến 'khúc nhạc đồng quê'; Đoạn 3: Phần còn lại).\n- Hướng dẫn đọc từ khó và câu dài: ngắt nghỉ đúng dấu câu và nhịp cảm xúc.\n- Giải nghĩa từ ngữ chú giải trong SGK: 'thanh âm', 'thiên nhiên', 'hòa tấu'.",
@@ -129,13 +124,8 @@ export function getDetailedActivitiesForLesson(
           "Biết nhận diện chính xác và phân loại đúng các danh từ, động từ, tính từ trong đoạn văn cho trước.",
           "Biết đặt câu đúng ngữ pháp, sử dụng từ ngữ chính xác, sinh động, phù hợp ngữ cảnh."
         ],
-        teacherMaterials: [
-          "Phiếu học tập nhóm, bảng phụ chia 3 cột (Danh từ - Động từ - Tính từ), thẻ từ nam châm.",
-          "Slide trình chiếu các bài tập trong SGK."
-        ],
-        studentMaterials: [
-          "SGK Tiếng Việt 5, vở bài tập Tiếng Việt 5, bút chì, bảng con."
-        ],
+        teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+        studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
         act1Teacher: "Tổ chức trò chơi 'Bắn tên thần tốc': GV hô 'Danh từ!', học sinh được gọi tên phải nêu ngay 1 từ chỉ sự vật quanh lớp (bàn ghế, thước kẻ, bảng đen); GV hô 'Động từ!' -> HS nêu từ chỉ hoạt động (đọc, viết, chạy); GV hô 'Tính từ!' -> HS nêu từ chỉ đặc điểm (chăm chỉ, ngoan ngoãn, đẹp). Chốt kiến thức, dẫn vào bài.",
         act1Student: "Hào hứng tham gia trò chơi, phản xạ nhanh khi được gọi tên. Nhắc lại nhanh khái niệm: Danh từ chỉ sự vật, động từ chỉ hoạt động/trạng thái, tính từ chỉ đặc điểm/tính chất.",
         act2Teacher: "- Trình chiếu đoạn văn ngữ liệu trong SGK lên màn hình.\n- Yêu cầu HS đọc thầm đoạn văn, làm việc cá nhân xác định các từ ngữ in đậm thuộc từ loại nào.\n- Phát bảng phụ cho 4 nhóm, yêu cầu phân loại các từ ngữ vào 3 cột: Danh từ - Động từ - Tính từ.\n- Quan sát các nhóm thảo luận, gợi ý các trường hợp từ ghép dễ gây nhầm lẫn.",
@@ -155,12 +145,8 @@ export function getDetailedActivitiesForLesson(
           "Biết phân tích bài văn mẫu trong SGK để nhận diện các yếu tố sáng tạo của người viết.",
           "Bước đầu hình thành ý tưởng sáng tạo cho câu chuyện của bản thân, rèn kỹ năng diễn đạt mạch lạc, giàu hình ảnh."
         ],
-        teacherMaterials: [
-          "Bài văn mẫu kể chuyện sáng tạo in trên bảng phụ/slide, phiếu hướng dẫn lập dàn ý câu chuyện sáng tạo."
-        ],
-        studentMaterials: [
-          "SGK Tiếng Việt 5, vở tập làm văn, bút màu ghi chú."
-        ],
+        teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+        studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
         act1Teacher: "Chiếu hình ảnh câu chuyện 'Cậu bé Tích Chu' hoặc 'Rùa và Thỏ'. Hỏi: 'Nếu em đóng vai chú Rùa hoặc chú Thỏ để tự kể lại câu chuyện thì câu chuyện sẽ thay đổi như thế nào?' HS phát biểu -> GV dẫn dắt vào bài mới: Kể chuyện sáng tạo.",
         act1Student: "Hào hứng chia sẻ ý tưởng: 'Nếu đóng vai chú Rùa, em sẽ kể lại cảm giác lúc thấy Thỏ ngủ quên và sự cố gắng không bỏ cuộc của mình.' Lắng nghe GV giới thiệu bài học.",
         act2Teacher: "- Yêu cầu 1 học sinh đọc bài văn mẫu trong SGK trang 14.\n- Đặt câu hỏi định hướng tìm hiểu:\n  + Câu chuyện được kể theo ngôi thứ mấy? Người kể xưng là gì?\n  + Người viết đã sáng tạo thêm những chi tiết nào so với câu chuyện gốc (lời thoại nội tâm, cảnh vật thiên nhiên, kết thúc bất ngờ)?\n  + Những chi tiết sáng tạo đó làm cho câu chuyện hấp dẫn hơn ra sao?",
@@ -180,13 +166,8 @@ export function getDetailedActivitiesForLesson(
           "Hiểu nội dung bài đọc: Cánh đồng hoa rực rỡ sắc màu không chỉ mang lại vẻ đẹp cho quê hương mà còn là kết tinh của mồ hôi, công sức lao động của người nông dân; giáo dục ý thức trân trọng thành quả lao động và bảo vệ môi trường.",
           "Rèn luyện kỹ năng đọc hiểu văn bản nghệ thuật và liên hệ thực tế."
         ],
-        teacherMaterials: [
-          "SGK Tiếng Việt 5, tranh ảnh và video clip ngắn về cánh đồng hoa rực rỡ sắc màu (hoa cúc, hoa hướng dương, hoa cải).",
-          "Hệ thống câu hỏi đọc hiểu trên máy chiếu."
-        ],
-        studentMaterials: [
-          "SGK Tiếng Việt 5, vở ghi, bút dạ quang."
-        ],
+        teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+        studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
         act1Teacher: "Mở đoạn video ngắn 45 giây về cánh đồng hoa bạt ngàn trong nắng sớm. Đặt câu hỏi: 'Bức tranh cánh đồng hoa mang đến cho em cảm giác gì? Em có muốn một lần được dạo bước giữa cánh đồng hoa như vậy không?' Dẫn dắt vào bài 'Cánh đồng hoa'.",
         act1Student: "Quan sát video đầy thích thú. Trả lời câu hỏi: 'Em thấy cánh đồng hoa rất đẹp, rực rỡ và bình yên.' Mở SGK theo dõi bài học.",
         act2Teacher: "- Đọc mẫu toàn bài với giọng tươi vui, ấm áp.\n- Hướng dẫn học sinh chia đoạn (3 đoạn).\n- Yêu cầu đọc nối tiếp từng đoạn, uốn nắn cách phát âm các từ ngữ: 'rực rỡ', 'bát ngát', 'thoang thoảng', 'trĩu nặng'.\n- Giải nghĩa từ mới: 'bạt ngát', 'hương sắc', 'thổ nhưỡng'.",
@@ -206,12 +187,8 @@ export function getDetailedActivitiesForLesson(
           "Biết ghi chép vào Phiếu đọc sách những thông tin quan trọng: tên bài đọc, tác giả, hình ảnh đẹp, câu văn yêu thích và cảm nghĩ của bản thân.",
           "Tự tin chia sẻ bài đọc với bạn bè, lan tỏa thói quen đọc sách mỗi ngày."
         ],
-        teacherMaterials: [
-          "Một số cuốn sách thiếu nhi hay, bài thơ chọn lọc về quê hương; mẫu Phiếu đọc sách in sẵn cho học sinh."
-        ],
-        studentMaterials: [
-          "Sách truyện, báo thiếu nhi đã chuẩn bị trước ở nhà hoặc mượn ở thư viện trường, Phiếu đọc sách cá nhân."
-        ],
+        teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+        studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
         act1Teacher: "Cho học sinh nghe giai điệu bài hát 'Em yêu trường em'. Đố học sinh chia sẻ tên cuốn sách hoặc bài thơ gần đây nhất mà em đã đọc viết về quê hương, trường lớp.",
         act1Student: "Hào hứng giơ tay chia sẻ: 'Em đã đọc bài thơ Hạt gạo làng ta của tác giả Trần Đăng Khoa.'",
         act2Teacher: "- Hướng dẫn học sinh mở tài liệu/sách đã chuẩn bị.\n- Nhắc lại yêu cầu đọc mở rộng: Đọc thầm kĩ văn bản, dùng bút chì đánh dấu những câu văn/câu thơ có hình ảnh so sánh, nhân hóa đẹp mắt.\n- Hướng dẫn hoàn thiện Phiếu đọc sách với các mục rõ ràng: Tên tác phẩm, Tác giả, Ngày đọc, Chi tiết ấn tượng nhất, Bài học rút ra.",
@@ -231,12 +208,8 @@ export function getDetailedActivitiesForLesson(
           "Ôn tập và làm thành thạo các bài tập về từ loại (danh từ, động từ, tính từ) và câu kể theo chuẩn kiến thức tuần 1.",
           "Rèn tính cẩn thận, kiên nhẫn, giữ gìn vở sạch chữ đẹp."
         ],
-        teacherMaterials: [
-          "Bài tập rèn chữ mẫu trên bảng phụ/slide, phiếu bài tập bổ trợ rèn từ và câu tuần 1."
-        ],
-        studentMaterials: [
-          "Vở luyện viết / Vở thực hành Tiếng Việt, bút mực, thước kẻ."
-        ],
+        teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+        studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
         act1Teacher: "Cho học sinh quan sát bài viết chữ mẫu đẹp của một bạn học sinh đạt giải 'Vở sạch chữ đẹp'. Nhắc lại tư thế ngồi viết và cách cầm bút chuẩn.",
         act1Student: "Quan sát bài viết mẫu, điều chỉnh lại tư thế ngồi ngay ngắn (lưng thẳng, ngực không tì vào bàn, khoảng cách mắt 25-30cm), cầm bút bằng 3 ngón tay.",
         act2Teacher: "- Trình chiếu bài tập rèn từ và câu: Yêu cầu phân biệt các cặp từ đồng âm, từ ngữ dễ lẫn phụ âm đầu (l/n, s/x, tr/ch).\n- Hướng dẫn HS tìm nhanh từ ngữ đúng chính tả để điền vào chỗ trống trong đoạn văn ngắn.",
@@ -263,13 +236,8 @@ export function getDetailedActivitiesForLesson(
             "Biết sắp xếp các số tự nhiên theo thứ tự từ bé đến lớn và ngược lại.",
             "Rèn luyện kỹ năng tính toán nhẩm nhanh, tư duy logic và tính cẩn thận, chính xác."
           ],
-          teacherMaterials: [
-            "Bảng các hàng và lớp (hàng đơn vị, chục, trăm - lớp đơn vị; hàng nghìn, chục nghìn, trăm nghìn - lớp nghìn; hàng triệu, chục triệu, trăm triệu - lớp triệu).",
-            "Bộ thẻ số từ 0 đến 9, slide trình chiếu bài tập."
-          ],
-          studentMaterials: [
-            "SGK Toán 5, vở bài tập Toán, bảng con, phấn/bút dạ."
-          ],
+          teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+          studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
           act1Teacher: "Tổ chức trò chơi 'Đố bạn đọc đúng': GV viết lên bảng số '85 412 309'. Gọi học sinh đọc số và nêu chữ số hàng chục nghìn là chữ số nào. Khen ngợi và dẫn dắt vào bài học.",
           act1Student: "Xung phong trả lời nhanh: 'Tám mươi lăm triệu bốn trăm mười hai nghìn ba trăm linh chín'. Chữ số 1 thuộc hàng chục nghìn. Cả lớp vỗ tay, mở SGK trang 6.",
           act2Teacher: "- Treo bảng các hàng và lớp lên bảng. Yêu cầu học sinh nhắc lại cấu trúc 3 lớp đã học: Lớp đơn vị, lớp nghìn, lớp triệu.\n- Đưa ra ví dụ số 425 618 390: Yêu cầu phân tích giá trị của từng chữ số: Chữ số 4 có giá trị là 400 000 000, chữ số 2 có giá trị là 20 000 000...\n- Hướng dẫn quy tắc so sánh hai số tự nhiên: Đếm số chữ số trước, nếu bằng nhau thì so sánh từng cặp chữ số ở cùng hàng từ trái sang phải.",
@@ -286,12 +254,8 @@ export function getDetailedActivitiesForLesson(
             "Vận dụng kiến thức về số tự nhiên để giải các bài toán thực tế liên quan đến thống kê số liệu, đo lường và đời sống.",
             "Phát triển năng lực giải quyết vấn đề toán học và tư duy ước lượng nhanh."
           ],
-          teacherMaterials: [
-            "Slide bài giảng minh họa quy tắc làm tròn số trên trục số, bảng phụ bài tập tình huống thực tế."
-          ],
-          studentMaterials: [
-            "SGK Toán 5, vở bài tập Toán, bảng con, bút chì."
-          ],
+          teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+          studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
           act1Teacher: "Trò chơi 'Ai nhanh hơn': GV chiếu các số và hỏi quy tắc làm tròn: 'Nếu chữ số sau hàng làm tròn nhỏ hơn 5 thì ta làm gì? Nếu từ 5 trở lên thì làm gì?' HS trả lời nhanh.",
           act1Student: "Đứng dậy trả lời dõng dạc: Nhỏ hơn 5 thì giữ nguyên chữ số hàng làm tròn và thay các chữ số phía sau bằng chữ số 0; từ 5 trở lên thì cộng thêm 1 vào hàng làm tròn.",
           act2Teacher: "- Hướng dẫn quy tắc làm tròn số cụ thể qua các ví dụ thực tế:\n  + Làm tròn số 78 436 đến hàng nghìn -> được 78 000.\n  + Làm tròn số 126 850 đến hàng chục nghìn -> được 130 000.\n- Vẽ trục số lên bảng để học sinh thấy trực quan khoảng cách gần hơn với mốc tròn nghìn/tròn chục nghìn.",
@@ -314,12 +278,8 @@ export function getDetailedActivitiesForLesson(
             "Nắm vững các tính chất của phép cộng: tính chất giao hoán, tính chất kết hợp, cộng với số 0 để tính toán bằng cách thuận tiện nhất.",
             "Giải được các bài toán thực tế có liên quan đến phép cộng, phép trừ số tự nhiên."
           ],
-          teacherMaterials: [
-            "Bảng phụ ghi các tính chất giao hoán, kết hợp của phép cộng; slide bài tập tính giá trị biểu thức."
-          ],
-          studentMaterials: [
-            "SGK Toán 5, vở bài tập Toán, bảng con, nháp."
-          ],
+          teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+          studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
           act1Teacher: "Khởi động trò chơi 'Tính nhanh chuyền bóng': GV nêu phép tính nhẩm: 450 + 550; 1000 - 350. Học sinh bắt bóng trả lời nhanh và chuyền cho bạn khác.",
           act1Student: "Bắt bóng và tính nhẩm nhanh: 450 + 550 = 1000; 1000 - 350 = 650. Không khí lớp học sôi nổi, sẵn sàng vào bài mới.",
           act2Teacher: "- Yêu cầu 2 học sinh lên bảng đặt tính rồi tính:\n  a) 48 352 + 26 419\n  b) 75 820 - 38 465\n- Hướng dẫn học sinh nhận xét cách đặt tính: Các chữ số ở cùng một hàng phải thẳng cột với nhau, thực hiện từ phải sang trái, lưu ý thêm số nhớ vào hàng tiếp theo.\n- Nhắc lại công thức tính thuận tiện: a + b = b + a; (a + b) + c = a + (b + c).",
@@ -336,12 +296,8 @@ export function getDetailedActivitiesForLesson(
             "Vận dụng tính chất giao hoán, kết hợp của phép nhân, nhân một số với một tổng/hiệu để tính bằng cách thuận tiện nhất.",
             "Giải bài toán có lời văn liên quan đến phép nhân, phép chia trong thực tế đời sống sản xuất."
           ],
-          teacherMaterials: [
-            "Slide trình chiếu quy trình đặt tính phép nhân và phép chia cho số có 2 chữ số, phiếu bài tập nhóm."
-          ],
-          studentMaterials: [
-            "SGK Toán 5, vở bài tập Toán, bảng con, nháp."
-          ],
+          teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+          studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
           act1Teacher: "Trò chơi 'Bảng cửu chương siêu tốc': GV đọc bất kì một phép nhân trong bảng cửu chương (7 x 8, 9 x 6, 8 x 9), chỉ định học sinh trả lời nhanh trong vòng 2 giây.",
           act1Student: "Tập trung cao độ, trả lời chính xác: 7 x 8 = 56; 9 x 6 = 54; 8 x 9 = 72. Sẵn sàng vào bài học phép nhân, phép chia.",
           act2Teacher: "- Yêu cầu 2 học sinh lên bảng đặt tính rồi tính:\n  a) 345 x 24\n  b) 8 460 : 36\n- Hướng dẫn học sinh phân tích các tích riêng trong phép nhân và cách ước lượng thương trong từng lượt chia của phép chia cho số có hai chữ số.\n- Chú ý nhắc nhở các lỗi sai thường gặp: Viết tích riêng thứ hai không lùi sang trái một cột; ước lượng thương quá lớn hoặc quá bé.",
@@ -362,12 +318,8 @@ export function getDetailedActivitiesForLesson(
           "Nắm vững tính chất cơ bản của phân số; biết cách rút gọn phân số và quy đồng mẫu số hai phân số đơn giản.",
           "Biết so sánh hai phân số cùng mẫu số và khác mẫu số; nhận biết phân số bé hơn 1, bằng 1 và lớn hơn 1."
         ],
-        teacherMaterials: [
-          "Bộ đồ dùng thực hành phân số lớp 5 (các hình tròn, hình vuông chia phần bằng nhau), slide minh họa phân số trực quan."
-        ],
-        studentMaterials: [
-          "SGK Toán 5, vở bài tập Toán, bảng con, bút màu, nháp."
-        ],
+        teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+        studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
         act1Teacher: "Chiếu hình ảnh một chiếc bánh pizza được chia đều thành 8 miếng, bạn Nam đã ăn 3 miếng. Hỏi: 'Phân số chỉ số phần bánh bạn Nam đã ăn là bao nhiêu? Số phần bánh còn lại là bao nhiêu?' Dẫn dắt vào bài Ôn tập phân số.",
         act1Student: "Quan sát hình ảnh bánh pizza, trả lời nhanh: 'Bạn Nam đã ăn 3/8 chiếc bánh, số phần bánh còn lại là 5/8 chiếc bánh.' Mở SGK trang 12.",
         act2Teacher: "- Nhắc lại kiến thức cơ bản về phân số a/b (b khác 0): a là tử số (chỉ số phần lấy đi), b là mẫu số (chỉ số phần bằng nhau được chia ra).\n- Nêu tính chất cơ bản của phân số: Nhân hoặc chia cả tử số và mẫu số với cùng một số tự nhiên khác 0 thì được phân số mới bằng phân số đã cho.\n- Ôn lại cách rút gọn phân số (chia cho ước chung lớn nhất) và quy đồng mẫu số (tìm mẫu số chung nhỏ nhất).",
@@ -392,13 +344,8 @@ export function getDetailedActivitiesForLesson(
           "Nêu được tên các nước có chung đường biên giới trên đất liền với Việt Nam (Trung Quốc, Lào, Cam-pu-chia) và các vùng biển tiếp giáp.",
           "Biết được ý nghĩa của Quốc kì (cờ đỏ sao vàng), Quốc huy và Quốc ca Việt Nam (bài hát Tiến quân ca của nhạc sĩ Văn Cao). Bồi dưỡng niềm tự hào dân tộc, ý thức bảo vệ chủ quyền Tổ quốc."
         ],
-        teacherMaterials: [
-          "Lược đồ vị trí địa lí và lãnh thổ Việt Nam trên máy chiếu/bản đồ treo tường, hình ảnh Quốc kì, Quốc huy Việt Nam, file âm thanh Quốc ca chuẩn.",
-          "Phiếu học tập tìm hiểu vị trí địa lí."
-        ],
-        studentMaterials: [
-          "SGK Lịch sử và Địa lí 5, vở ghi, bút chì, tập bản đồ."
-        ],
+        teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+        studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
         act1Teacher: "Mở đoạn nhạc hào hùng của bài hát 'Tiến quân ca' kết hợp chiếu hình ảnh lá cờ đỏ sao vàng tung bay trên cột cờ Lũng Cú. Hỏi: 'Hình ảnh và giai điệu này nhắc em nhớ đến biểu tượng thiêng liêng nào của dân tộc ta?' Dẫn dắt vào Bài 1.",
         act1Student: "Đứng nghiêm trang lắng nghe giai điệu Quốc ca. Trả lời câu hỏi: 'Đó là Quốc kì và Quốc ca của nước Cộng hòa xã hội chủ nghĩa Việt Nam'. Mở SGK trang 5.",
         act2Teacher: "- Yêu cầu học sinh quan sát Lược đồ Việt Nam trong khu vực Đông Nam Á (SGK trang 6):\n  + Chỉ vị trí nước ta nằm ở khu vực nào của châu Á?\n  + Nêu tên các quốc gia tiếp giáp với phần đất liền nước ta ở phía Bắc, phía Tây?\n  + Phía Đông và Nam tiếp giáp với vùng biển nào?\n- Hướng dẫn học sinh thảo luận nhóm 4 hoàn thành Phiếu học tập số 1 về tọa độ và các điểm tiếp giáp.",
@@ -415,12 +362,8 @@ export function getDetailedActivitiesForLesson(
           "Biết được thủ đô của Việt Nam là Hà Nội; các thành phố trực thuộc Trung ương; số lượng đơn vị hành chính cấp tỉnh/thành phố.",
           "Hiểu được tầm quan trọng chiến lược của biển đảo Việt Nam (Hoàng Sa, Trường Sa) đối với an ninh quốc phòng và phát triển kinh tế biển."
         ],
-        teacherMaterials: [
-          "Bản đồ hành chính Việt Nam treo tường hoặc số hóa, hình ảnh hai quần đảo Hoàng Sa và Trường Sa, tư liệu lịch sử về chủ quyền biển đảo."
-        ],
-        studentMaterials: [
-          "SGK Lịch sử và Địa lí 5, vở bài tập, bút màu."
-        ],
+        teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+        studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
         act1Teacher: "Đố vui địa lí: 'Đố em nước mình hình chữ gì? Đầu chạm Lũng Cú, chân quỳ Cà Mau?' HS đồng thanh: Hình chữ S! GV kết nối vào tiết 2 của bài học.",
         act1Student: "Hào hứng trả lời câu đố vui, mở SGK bài 1 (tiết 2).",
         act2Teacher: "- Treo Bản đồ hành chính Việt Nam lên bảng. Yêu cầu học sinh quan sát và trả lời:\n  + Phần đất liền của nước ta có hình dạng gì? Chiều dài từ Bắc vào Nam khoảng bao nhiêu km?\n  + Nơi hẹp nhất của nước ta theo chiều Tây - Đông là tỉnh nào (Quảng Bình, chưa đầy 50 km)?\n  + Kể tên thủ đô và 5 thành phố trực thuộc Trung ương của nước ta (Hà Nội, TP Hồ Chí Minh, Hải Phòng, Đà Nẵng, Cần Thơ).\n  + Vùng biển nước ta có hai quần đảo lớn thiêng liêng nào thuộc chủ quyền Việt Nam?",
@@ -445,13 +388,8 @@ export function getDetailedActivitiesForLesson(
           "Thực hiện được các thao tác thí nghiệm đơn giản khám phá sự có mặt của không khí và nước trong đất; quan sát và ghi chép hiện tượng trung thực.",
           "Hình thành tư duy nghiên cứu khoa học thực nghiệm, cẩn thận, an toàn khi thực hành thí nghiệm."
         ],
-        teacherMaterials: [
-          "Dụng cụ thí nghiệm cho các nhóm: Cốc thủy tinh đựng nước trong, thìa nhỏ, mẫu đất khô vón cục, đĩa nhôm, đèn cồn hoặc nến, que diêm, kính lúp cầm tay.",
-          "Phiếu ghi chép kết quả thí nghiệm."
-        ],
-        studentMaterials: [
-          "SGK Khoa học 5, vở bài tập Khoa học, khăn lau tay, mẫu đất nhỏ lấy từ vườn nhà."
-        ],
+        teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+        studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
         act1Teacher: "Mang đến lớp 1 chậu cây xanh tươi tốt và 1 chậu đất khô cằn. Hỏi: 'Điều gì trong đất đã giúp cây xanh lớn lên và phát triển tươi tốt mỗi ngày? Trong đất có chứa những thành phần gì?' Kích thích trí tò mò, dẫn vào bài.",
         act1Student: "Quan sát hai chậu cây, suy đoán sôi nổi: 'Trong đất có nước, có chất dinh dưỡng, có phân bón...' Mở SGK trang 8.",
         act2Teacher: "- Hướng dẫn các nhóm tiến hành 2 thí nghiệm khám phá thành phần của đất:\n  + Thí nghiệm 1: Thả một cục đất khô vào cốc nước trong. Yêu cầu quan sát hiện tượng ở bề mặt cục đất (có bọt khí nổi lên -> chứng tỏ trong đất có không khí).\n  + Thí nghiệm 2: Dùng thìa lấy một ít đất ẩm bỏ vào đĩa nhôm, hơ trên ngọn nến, đậy mặt kính phía trên. Quan sát mặt kính có hơi nước đọng lại -> chứng tỏ trong đất có nước; có mùi khét -> chứng tỏ trong đất có chất mùn (xác sinh vật phân hủy).\n- Hướng dẫn quy tắc an toàn khi dùng lửa thí nghiệm.",
@@ -468,12 +406,8 @@ export function getDetailedActivitiesForLesson(
           "Nêu được các biện pháp bảo vệ đất, làm cho đất màu mỡ, phì nhiêu và chống xói mòn đất.",
           "Có ý thức bảo vệ môi trường đất, không vứt rác thải nhựa, túi ni lông hoặc hóa chất độc hại làm ô nhiễm đất."
         ],
-        teacherMaterials: [
-          "Tranh ảnh phóng to bộ rễ cây bám trong lòng đất, video về vai trò của đất đối với mùa màng và hậu quả của xói mòn đất, slide bài giảng."
-        ],
-        studentMaterials: [
-          "SGK Khoa học 5, vở bài tập Khoa học, bút chì màu."
-        ],
+        teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+        studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
         act1Teacher: "Chiếu hình ảnh một cây cổ thụ đứng vững trước cơn gió bão lớn. Hỏi: 'Nhờ đâu mà thân cây to lớn có thể đứng vững trước gió bão mà không bị đổ ngã?' HS trả lời -> Dẫn vào tiết 2: Vai trò của đất đối với cây trồng.",
         act1Student: "Quan sát tranh, hào hứng trả lời: 'Nhờ có bộ rễ cắm sâu và bám chặt vào trong lòng đất ạ!' Mở SGK bài 1 (tiết 2).",
         act2Teacher: "- Yêu cầu học sinh đọc thông tin trong SGK trang 11 và quan sát sơ đồ vai trò của đất.\n- Đặt câu hỏi thảo luận nhóm 4:\n  + Đất cung cấp những gì cho cây trồng phát triển?\n  + Nếu đất bị khô cằn, bạc màu hoặc nhiễm độc thì cây trồng sẽ ra sao?\n  + Cần làm gì để giữ cho đất luôn màu mỡ, phì nhiêu?",

@@ -55,7 +55,7 @@ export const ScheduleView: React.FC<ScheduleViewProps> = ({
 
   const isHomeroom = schoolInfo.teacherType === "homeroom";
   const personalItems = isHomeroom
-    ? scheduleItems.filter((it) => !it.note || !it.note.includes("GV Chuyên"))
+    ? scheduleItems.filter((it) => !isSpecialistSlotInClass(it, schoolInfo))
     : scheduleItems;
 
   const baseItems = isHomeroom && viewScope === "personal" ? personalItems : scheduleItems;

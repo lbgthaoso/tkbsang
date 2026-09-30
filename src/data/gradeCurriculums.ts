@@ -1,5 +1,12 @@
 import { Grade } from "../types";
 import { lookupDetailedCurriculumLesson } from "./gradeCurriculumDatabase";
+import {
+  GRADE_1_DAO_DUC,
+  GRADE_2_DAO_DUC,
+  GRADE_3_DAO_DUC,
+  GRADE_4_DAO_DUC,
+  GRADE_5_DAO_DUC_NEW,
+} from "./moralEducationCurriculum";
 
 export interface LessonInfo {
   lessonTitle: string;
@@ -181,28 +188,16 @@ export const GRADE_1_CURRICULUM: Record<string, (week: number, periodInWeek: num
   },
 
   "đạo đức": (week: number) => {
-    if (week === 1) return {
-      lessonTitle: "Bài 1: Em giữ sạch đôi tay (Tiết 1)",
-      curriculumPeriod: 1,
-      integrationNotes: "Quyền được chăm sóc sức khỏe: Giữ gìn vệ sinh thân thể, tự giác rửa tay sạch sẽ."
-    };
-    if (week === 2) return {
-      lessonTitle: "Bài 2: Em giữ sạch răng miệng (Tiết 1)",
-      curriculumPeriod: 2,
-      integrationNotes: "QCN: Quyền được chăm sóc sức khỏe và bổn phận giữ gìn vệ sinh cá nhân."
-    };
-    if (week === 3) return {
-      lessonTitle: "Bài 3: Em tắm, gội sạch sẽ (Tiết 1)",
-      curriculumPeriod: 3,
-      integrationNotes: "QCN & KNS: Rèn kỹ năng tự phục vụ, tắm rửa giữ cơ thể thơm tho sạch sẽ."
-    };
-    if (week === 4) return {
-      lessonTitle: "Bài 4: Em giữ trang phục gọn gàng, sạch sẽ (Tiết 1)",
-      curriculumPeriod: 4,
-      integrationNotes: "QCN: Quyền được mặc sạch sẽ; Bổn phận giữ gìn quần áo gọn gàng văn minh."
-    };
+    const lesson = GRADE_1_DAO_DUC[week]?.[1];
+    if (lesson) {
+      return {
+        lessonTitle: lesson.title,
+        curriculumPeriod: week,
+        integrationNotes: lesson.note || "Quyền được chăm sóc sức khỏe: Giữ gìn vệ sinh thân thể, tự giác rửa tay sạch sẽ."
+      };
+    }
     return {
-      lessonTitle: `Bài đạo đức tuần ${week}`,
+      lessonTitle: `Đạo đức 1 - Tuần ${week}`,
       curriculumPeriod: week,
       integrationNotes: "Giáo dục chuẩn mực hành vi đạo đức và phẩm chất tốt đẹp."
     };
@@ -414,21 +409,14 @@ export const GRADE_2_CURRICULUM: Record<string, (week: number, p: number) => Les
   },
 
   "đạo đức": (week: number) => {
-    if (week === 1 || week === 2) return {
-      lessonTitle: `Bài 1: Vẻ đẹp quê hương em (Tiết ${week})`,
-      curriculumPeriod: week,
-      integrationNotes: "GDQPAN: Bảo vệ chủ quyền, toàn vẹn lãnh thổ. BVMT: Giữ sạch cảnh quan quê hương. NLS 1.1.CB1a, AI 2.A1.1"
-    };
-    if (week === 3 || week === 4 || week === 5) return {
-      lessonTitle: `Bài 2: Em yêu quê hương (Tiết ${week - 2})`,
-      curriculumPeriod: week,
-      integrationNotes: "GDQPAN: Tự hào dân tộc Việt Nam. Lối sống nhân ái, chăm sóc cây xanh quê hương. AI 2.A1.1"
-    };
-    if (week === 6 || week === 7) return {
-      lessonTitle: `Bài 3: Kính trọng thầy giáo, cô giáo (Tiết ${week - 5})`,
-      curriculumPeriod: week,
-      integrationNotes: "QCN: Quyền được học tập, bổn phận kính trọng thầy cô. NLS 2.5.CB1a, AI 2.A1.2"
-    };
+    const lesson = GRADE_2_DAO_DUC[week]?.[1];
+    if (lesson) {
+      return {
+        lessonTitle: lesson.title,
+        curriculumPeriod: week,
+        integrationNotes: lesson.note || "Rèn luyện nhân cách và lối sống văn minh."
+      };
+    }
     return {
       lessonTitle: `Đạo đức 2 - Tuần ${week}`,
       curriculumPeriod: week,
@@ -633,16 +621,14 @@ export const GRADE_4_CURRICULUM: Record<string, (week: number, p: number) => Les
   },
 
   "đạo đức": (week: number) => {
-    if (week <= 4) return {
-      lessonTitle: `Bài 1: Biết ơn người lao động (Tiết ${week})`,
-      curriculumPeriod: week,
-      integrationNotes: week === 1 ? "AI 4.A1.1, 4.C2.1: Người lao động thông minh (Robot thu hoạch, AI chẩn đoán)." : week === 2 ? "Lối sống: Biết ơn người lao động bằng lời nói, việc làm." : week === 3 ? "QCN: Quyền được tôn trọng của người lao động." : "NLS 1.1.CB1a: Tìm hiểu câu chuyện về người lao động."
-    };
-    if (week <= 8) return {
-      lessonTitle: `Bài 2: Cảm thông, giúp đỡ người gặp khó khăn (Tiết ${week - 4})`,
-      curriculumPeriod: week,
-      integrationNotes: "QCN: Không phân biệt đối xử. AI 4.A2.2: AI hỗ trợ người khiếm thị/khiếm thính."
-    };
+    const lesson = GRADE_4_DAO_DUC[week]?.[1];
+    if (lesson) {
+      return {
+        lessonTitle: lesson.title,
+        curriculumPeriod: week,
+        integrationNotes: lesson.note || "Bồi dưỡng phẩm chất nhân ái, trung thực, trách nhiệm."
+      };
+    }
     return {
       lessonTitle: `Đạo đức 4 - Tuần ${week}`,
       curriculumPeriod: week,
@@ -806,16 +792,14 @@ export const GRADE_5_CURRICULUM: Record<string, (week: number, p: number) => Les
   },
 
   "đạo đức": (week: number) => {
-    if (week <= 4) return {
-      lessonTitle: `Bài 1: Biết ơn những người có công với quê hương, đất nước (Tiết ${week})`,
-      curriculumPeriod: week,
-      integrationNotes: "GDQPAN, QCN: Tri ân các anh hùng liệt sĩ, người có công với Tổ quốc."
-    };
-    if (week <= 7) return {
-      lessonTitle: `Bài 2: Tôn trọng sự khác biệt của người khác (Tiết ${week - 4})`,
-      curriculumPeriod: week,
-      integrationNotes: "QCN: Tôn trọng sự bình đẳng và bản sắc văn hóa các dân tộc."
-    };
+    const lesson = GRADE_5_DAO_DUC_NEW[week]?.[1];
+    if (lesson) {
+      return {
+        lessonTitle: lesson.title,
+        curriculumPeriod: week,
+        integrationNotes: lesson.note || "Bồi dưỡng chuẩn mực đạo đức lối sống lành mạnh."
+      };
+    }
     return {
       lessonTitle: `Đạo đức 5 - Tuần ${week}`,
       curriculumPeriod: week,
@@ -925,20 +909,70 @@ export const GRADE_3_CURRICULUM: Record<string, (week: number, p: number) => Les
     if (week === 1) return { lessonTitle: `Bài 1: Họ hàng nội, ngoại (Tiết ${p})`, curriculumPeriod: p, integrationNotes: "Tình cảm gắn bó với họ hàng hai bên nội ngoại." };
     if (week === 2) return { lessonTitle: `Bài 2: Một số ngày kỉ niệm, sự kiện của gia đình (Tiết ${p})`, curriculumPeriod: 2 + p, integrationNotes: "Biết ơn và trân trọng những ngày sum họp gia đình." };
     if (week === 3) return { lessonTitle: `Bài 3: Phòng tránh hỏa hoạn khi ở nhà (Tiết ${p})`, curriculumPeriod: 4 + p, integrationNotes: "KNS & ANQP: Phòng chống cháy nổ, thoát hiểm an toàn." };
-    return { lessonTitle: `TNXH 3 - Tuần ${week} (Tiết ${p})`, curriculumPeriod: (week - 1) * 2 + p };
+    if (week === 4) return { lessonTitle: `Bài 4: Giữ vệ sinh xung quanh nhà ở (Tiết ${p})`, curriculumPeriod: 6 + p, integrationNotes: "BVMT: Ý thức quét dọn, giữ sạch đẹp ngõ xóm." };
+    if (week === 5) return { lessonTitle: `Bài 5: Ôn tập chủ đề Gia đình (Tiết ${p})`, curriculumPeriod: 8 + p, integrationNotes: "Củng cố kiến thức và mối quan hệ yêu thương gia đình." };
+    if (week === 6) return { lessonTitle: `Bài 6: Truyền thống nhà trường (Tiết ${p})`, curriculumPeriod: 10 + p, integrationNotes: "Tự hào về lịch sử và thành tích trường lớp em." };
+    if (week === 7) return { lessonTitle: `Bài 6: Truyền thống nhà trường (tiếp theo) (Tiết ${p})`, curriculumPeriod: 12 + p, integrationNotes: "Phát huy tinh thần hiếu học và giữ gìn nề nếp trường lớp." };
+    if (week === 8) return { lessonTitle: `Bài 7: Hoạt động tình nguyện, nhân đạo của nhà trường (Tiết ${p})`, curriculumPeriod: 14 + p, integrationNotes: "Lòng nhân ái: Giúp đỡ bạn có hoàn cảnh khó khăn." };
+    if (week === 9) return { lessonTitle: `Ôn tập giữa học kì 1: Chủ đề Gia đình và Nhà trường (Tiết ${p})`, curriculumPeriod: 16 + p, integrationNotes: "Hệ thống hóa kiến thức TNXH nửa đầu học kì 1." };
+    return {
+      lessonTitle: `TNXH 3 - Tuần ${week}: Bài học thực hành & Khám phá môi trường sống (Tiết ${p})`,
+      curriculumPeriod: (week - 1) * 2 + p,
+      integrationNotes: "Tích hợp kĩ năng sống và giáo dục bảo vệ môi trường chuẩn GDPT 2018."
+    };
   },
 
   "đạo đức": (week: number) => {
-    if (week <= 2) return { lessonTitle: `Bài 1: Kính trọng thầy giáo, cô giáo (Tiết ${week})`, curriculumPeriod: week };
-    if (week <= 4) return { lessonTitle: `Bài 2: Yêu quý bạn bè (Tiết ${week - 2})`, curriculumPeriod: week };
-    return { lessonTitle: `Đạo đức 3 - Tuần ${week}`, curriculumPeriod: week };
+    const lesson = GRADE_3_DAO_DUC[week]?.[1];
+    if (lesson) {
+      return {
+        lessonTitle: lesson.title,
+        curriculumPeriod: week,
+        integrationNotes: lesson.note || "Giáo dục phẩm chất nhân ái, trung thực và trách nhiệm."
+      };
+    }
+    return {
+      lessonTitle: `Đạo đức 3 - Tuần ${week}: Rèn luyện hành vi và chuẩn mực đạo đức`,
+      curriculumPeriod: week,
+      integrationNotes: "Giáo dục phẩm chất nhân ái, trung thực và trách nhiệm."
+    };
   },
 
   "hoạt động trải nghiệm": (week: number, p: number) => {
-    if (week === 1) return { lessonTitle: p === 1 ? "SHDC: Chào năm học mới" : p === 2 ? "HĐGDCĐ: Khám phá bản thân" : "SHL: Sơ kết tuần 1", curriculumPeriod: p };
-    if (week === 2) return { lessonTitle: p === 1 ? "SHDC: Giao lưu các câu lạc bộ" : p === 2 ? "HĐGDCĐ: Tự tin trong học tập" : "SHL: Sơ kết tuần 2", curriculumPeriod: 3 + p };
-    if (week === 3) return { lessonTitle: p === 1 ? "SHDC: Hoạt động vui Tết Trung Thu" : p === 2 ? "HĐGDCĐ: Em và những người bạn" : "SHL: Cân bằng cảm xúc", curriculumPeriod: 6 + p };
-    return { lessonTitle: `HĐTN 3 Tuần ${week} (Tiết ${p})`, curriculumPeriod: (week - 1) * 3 + p };
+    if (week === 1) return { lessonTitle: p === 1 ? "SHDC: Chào năm học mới" : p === 2 ? "HĐGDCĐ: Khám phá bản thân" : "SHL: Sơ kết tuần 1 & Bầu ban cán sự lớp", curriculumPeriod: p };
+    if (week === 2) return { lessonTitle: p === 1 ? "SHDC: Giao lưu các câu lạc bộ" : p === 2 ? "HĐGDCĐ: Tự tin trong học tập" : "SHL: Sơ kết tuần 2 & Nề nếp học tập", curriculumPeriod: 3 + p };
+    if (week === 3) return { lessonTitle: p === 1 ? "SHDC: Hoạt động vui Tết Trung Thu" : p === 2 ? "HĐGDCĐ: Em và những người bạn" : "SHL: Cân bằng cảm xúc & Vui trung thu", curriculumPeriod: 6 + p };
+    if (week === 4) return { lessonTitle: p === 1 ? "SHDC: Tự hào truyền thống Đội" : p === 2 ? "HĐGDCĐ: Lắng nghe tích cực" : "SHL: Sơ kết tuần 4 & Tình bạn đẹp", curriculumPeriod: 9 + p };
+    if (week === 5) return { lessonTitle: p === 1 ? "SHDC: Tháng hành động vì trẻ em" : p === 2 ? "HĐGDCĐ: Việc nhà của em" : "SHL: Sơ kết tuần 5 & Lao động tự phục vụ", curriculumPeriod: 12 + p };
+    if (week === 6) return { lessonTitle: p === 1 ? "SHDC: Ước mơ nghề nghiệp tương lai" : p === 2 ? "HĐGDCĐ: Quản lý cảm xúc bản thân" : "SHL: Sơ kết tuần 6 & Tinh thần đoàn kết", curriculumPeriod: 15 + p };
+    if (week === 7) return { lessonTitle: p === 1 ? "SHDC: Tri ân thầy cô giáo" : p === 2 ? "HĐGDCĐ: Làm thiệp chúc mừng thầy cô" : "SHL: Sơ kết tuần 7 & Bông hoa điểm tốt", curriculumPeriod: 18 + p };
+    if (week === 8) return { lessonTitle: p === 1 ? "SHDC: Hội diễn văn nghệ chào mừng 20/11" : p === 2 ? "HĐGDCĐ: Lời chúc chân thành" : "SHL: Sơ kết tuần 8 & Thi đua học tốt", curriculumPeriod: 21 + p };
+    if (week === 9) return { lessonTitle: p === 1 ? "SHDC: Sơ kết thi đua đợt 1" : p === 2 ? "HĐGDCĐ: Rèn kĩ năng tự quản" : "SHL: Sơ kết giữa học kì 1", curriculumPeriod: 24 + p };
+    return {
+      lessonTitle: p === 1 ? `SHDC: Sinh hoạt dưới cờ tuần ${week}` : p === 2 ? `HĐGDCĐ: Rèn luyện kĩ năng sống tuần ${week}` : `SHL: Sinh hoạt lớp tuần ${week}`,
+      curriculumPeriod: (week - 1) * 3 + p,
+      integrationNotes: "Tích hợp giáo dục nề nếp, kĩ năng giao tiếp và sinh hoạt tập thể."
+    };
+  },
+
+  "tc tiếng việt": (week: number, p: number) => {
+    return {
+      lessonTitle: p === 1
+        ? `Tăng cường Tiếng Việt: Rèn kĩ năng đọc hiểu bài đọc tuần ${week} & Luyện viết chính tả (Tiết 1)`
+        : `Tăng cường Tiếng Việt: Mở rộng vốn từ & Luyện viết đoạn văn sáng tạo tuần ${week} (Tiết 2)`,
+      subSubject: p === 1 ? "Đọc - Viết" : "LTVC - Đoạn văn",
+      curriculumPeriod: (week - 1) * 2 + p,
+      integrationNotes: "Rèn luyện sự tự tin trong diễn đạt tiếng Việt và giữ gìn vở sạch chữ đẹp."
+    };
+  },
+
+  "tc toán": (week: number, p: number) => {
+    return {
+      lessonTitle: `Tăng cường Toán: Thực hành tính toán nhanh & Giải bài toán có lời văn thực tế tuần ${week}`,
+      subSubject: "Toán thực hành",
+      curriculumPeriod: week,
+      integrationNotes: "Rèn luyện tư duy logic toán học và khả năng áp dụng vào đời sống."
+    };
   }
 };
 

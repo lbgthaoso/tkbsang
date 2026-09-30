@@ -1,4 +1,18 @@
 import { LessonInfo } from "./gradeCurriculums";
+import {
+  GRADE_1_DAO_DUC,
+  GRADE_2_DAO_DUC,
+  GRADE_3_DAO_DUC,
+  GRADE_4_DAO_DUC,
+  GRADE_5_DAO_DUC_NEW,
+} from "./moralEducationCurriculum";
+
+export {
+  GRADE_1_DAO_DUC,
+  GRADE_2_DAO_DUC,
+  GRADE_3_DAO_DUC,
+  GRADE_4_DAO_DUC,
+};
 
 // =========================================================================
 // TOÀN BỘ CHƯƠNG TRÌNH CHI TIẾT 35 TUẦN THEO CHUẨN SGK KẾT NỐI TRI THỨC
@@ -294,19 +308,8 @@ export const GRADE_5_LS_DL: WeeklySubjectLessons = {
   }
 };
 
-// ĐẠO ĐỨC 5: 1 tiết / tuần
-export const GRADE_5_DAO_DUC: WeeklySubjectLessons = {
-  1: { 1: { title: "Bài 1: Biết ơn những người có công với quê hương, đất nước (Tiết 1)", note: "Tìm hiểu công lao to lớn của các anh hùng liệt sĩ." } },
-  2: { 1: { title: "Bài 1: Biết ơn những người có công với quê hương, đất nước (Tiết 2)", note: "Bày tỏ lòng biết ơn qua hành động chăm sóc đền ơn đáp nghĩa." } },
-  3: { 1: { title: "Bài 1: Biết ơn những người có công với quê hương, đất nước (Tiết 3)", note: "Xử lý tình huống và xây dựng kế hoạch thăm hỏi gia đình thương binh." } },
-  4: { 1: { title: "Bài 2: Tôn trọng sự khác biệt của người khác (Tiết 1)", note: "Mỗi người có nét riêng về ngoại hình, sở thích, tính cách." } },
-  5: { 1: { title: "Bài 2: Tôn trọng sự khác biệt của người khác (Tiết 2)", note: "Không kì thị, chế giễu nét khác biệt của bạn bè xung quanh." } },
-  6: { 1: { title: "Bài 2: Tôn trọng sự khác biệt của người khác (Tiết 3)", note: "Thực hành tôn trọng phong tục tập quán các dân tộc anh em." } },
-  7: { 1: { title: "Bài 3: Vượt qua khó khăn trong học tập và cuộc sống (Tiết 1)", note: "Nhận diện những khó khăn thử thách thường gặp của học sinh lớp 5." } },
-  8: { 1: { title: "Bài 3: Vượt qua khó khăn trong học tập và cuộc sống (Tiết 2)", note: "Tìm kiếm các giải pháp tự lực và nhờ sự trợ giúp đúng lúc." } },
-  9: { 1: { title: "Bài 3: Vượt qua khó khăn trong học tập và cuộc sống (Tiết 3)", note: "Xây dựng sổ tay rèn luyện ý chí và lòng kiên trì mỗi ngày." } },
-  10: { 1: { title: "Bài 4: Bảo vệ của công (Tiết 1)", note: "Ý nghĩa của việc giữ gìn tài sản chung của lớp, trường và xã hội." } },
-};
+// ĐẠO ĐỨC 5: 1 tiết / tuần (Đồng bộ toàn bộ 35 tuần theo phân phối chương trình mới)
+export const GRADE_5_DAO_DUC: WeeklySubjectLessons = GRADE_5_DAO_DUC_NEW;
 
 // CÔNG NGHỆ 5: 1 tiết / tuần
 export const GRADE_5_CONG_NGHE: WeeklySubjectLessons = {
@@ -717,6 +720,17 @@ export function lookupDetailedCurriculumLesson(
         };
       }
     }
+    if (normSub.includes("đạo đức") || normSub.includes("đđ")) {
+      const match = GRADE_4_DAO_DUC[week]?.[periodInWeek] || GRADE_4_DAO_DUC[week]?.[1];
+      if (match) {
+        return {
+          lessonTitle: match.title,
+          subSubject: "Đạo đức",
+          curriculumPeriod: week,
+          integrationNotes: match.note || "Bồi dưỡng chuẩn mực đạo đức lối sống lành mạnh."
+        };
+      }
+    }
   }
 
   // Khối 3
@@ -740,6 +754,17 @@ export function lookupDetailedCurriculumLesson(
           subSubject: "Toán",
           curriculumPeriod: (week - 1) * 5 + periodInWeek,
           integrationNotes: match.note || "Toán 3 Kết nối tri thức."
+        };
+      }
+    }
+    if (normSub.includes("đạo đức") || normSub.includes("đđ")) {
+      const match = GRADE_3_DAO_DUC[week]?.[periodInWeek] || GRADE_3_DAO_DUC[week]?.[1];
+      if (match) {
+        return {
+          lessonTitle: match.title,
+          subSubject: "Đạo đức",
+          curriculumPeriod: week,
+          integrationNotes: match.note || "Bồi dưỡng chuẩn mực đạo đức lối sống lành mạnh."
         };
       }
     }
@@ -769,6 +794,17 @@ export function lookupDetailedCurriculumLesson(
         };
       }
     }
+    if (normSub.includes("đạo đức") || normSub.includes("đđ")) {
+      const match = GRADE_2_DAO_DUC[week]?.[periodInWeek] || GRADE_2_DAO_DUC[week]?.[1];
+      if (match) {
+        return {
+          lessonTitle: match.title,
+          subSubject: "Đạo đức",
+          curriculumPeriod: week,
+          integrationNotes: match.note || "Bồi dưỡng chuẩn mực đạo đức lối sống lành mạnh."
+        };
+      }
+    }
   }
 
   // Khối 1
@@ -792,6 +828,17 @@ export function lookupDetailedCurriculumLesson(
           subSubject: "Toán",
           curriculumPeriod: (week - 1) * 3 + periodInWeek,
           integrationNotes: match.note || "Toán 1 Kết nối tri thức."
+        };
+      }
+    }
+    if (normSub.includes("đạo đức") || normSub.includes("đđ")) {
+      const match = GRADE_1_DAO_DUC[week]?.[periodInWeek] || GRADE_1_DAO_DUC[week]?.[1];
+      if (match) {
+        return {
+          lessonTitle: match.title,
+          subSubject: "Đạo đức",
+          curriculumPeriod: week,
+          integrationNotes: match.note || "Bồi dưỡng chuẩn mực đạo đức lối sống lành mạnh."
         };
       }
     }

@@ -43,7 +43,7 @@ import { syncSchoolInfoDates, calculateWeekDateRange } from "./utils/dateHelper"
 
 export function App() {
   // 1. School & Teacher Information State - Synced with NH 2026-2027 Phân Hiệu Kiến Bình
-  const CURRENT_TKB_VERSION = "kien_binh_nh2026_2027_v2";
+  const CURRENT_TKB_VERSION = "kien_binh_nh2026_2027_v4_daoduc_sync";
 
   const [schoolInfo, setSchoolInfo] = useState<SchoolInfo>(() => {
     const version = localStorage.getItem("th_tkb_version");
@@ -55,10 +55,10 @@ export function App() {
           const synced = syncSchoolInfoDates(parsed);
           return {
             ...synced,
-            teacherName: parsed.teacherName === "Thầy Sang" ? "Thầy Nguyễn Văn Sang" : (parsed.teacherName || "Cô Tuyết"),
+            teacherName: parsed.teacherName === "Thầy Sang" || !parsed.teacherName ? "Thầy Nguyễn Văn Sang" : parsed.teacherName,
             teacherType: parsed.teacherType || "homeroom",
             specialistSubject: parsed.specialistSubject || "Tiếng Anh",
-            assignedClasses: parsed.assignedClasses || DEFAULT_CLASSES,
+            assignedClasses: parsed.assignedClasses || ["3C"],
             principalName: parsed.principalName || "Lê Văn Hùng",
             departmentHeadName: parsed.departmentHeadName || "Trần Thị Huế",
             hasInclusiveEducation: parsed.hasInclusiveEducation ?? false,
@@ -73,15 +73,15 @@ export function App() {
 
     const defaultRange = calculateWeekDateRange(1);
     return {
-      teacherName: "Cô Tuyết",
+      teacherName: "Thầy Nguyễn Văn Sang",
       teacherType: "homeroom" as TeacherType,
       specialistSubject: "Tiếng Anh",
-      assignedClasses: DEFAULT_CLASSES,
+      assignedClasses: ["3C"],
       schoolName: "Trường Tiểu học Tân Thạnh",
       branchName: "Phân hiệu Kiến Bình",
       departmentName: "Ủy Ban Nhân Dân Xã Tân Thạnh - Phòng GD&ĐT",
-      grade: 5,
-      className: "5A",
+      grade: 3,
+      className: "3C",
       week: 1,
       academicYear: "2026 - 2027",
       startDate: defaultRange.startDate,

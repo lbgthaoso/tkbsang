@@ -34,6 +34,7 @@ import {
   getAuthenticDeckSummary
 } from "../utils/classroomSlideDataHelper";
 import { cleanLessonTitleForHeader } from "../data/curriculumData";
+import { sanitizeLessonMaterials } from "../utils/materialsHelper";
 
 interface LessonPlanViewProps {
   lessonPlans: LessonPlan[];
@@ -68,6 +69,12 @@ export const LessonPlanView: React.FC<LessonPlanViewProps> = ({
   const [isDownloadingPptx, setIsDownloadingPptx] = useState<boolean>(false);
   const [downloadSuccessMsg, setDownloadSuccessMsg] = useState<string | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState<boolean>(false);
+
+  React.useEffect(() => {
+    if (lessonPlans.length > 0 && !lessonPlans.some((p) => p.id === selectedPlanId)) {
+      setSelectedPlanId(lessonPlans[0].id);
+    }
+  }, [lessonPlans, selectedPlanId]);
 
   const filteredPlans = lessonPlans.filter((p) => {
     const matchesDay = selectedDayFilter === "all" || p.dayOfWeek === selectedDayFilter;
@@ -600,19 +607,31 @@ export const LessonPlanView: React.FC<LessonPlanViewProps> = ({
               </div>
 
               {/* SECTION II: ĐỒ DÙNG DẠY HỌC */}
-              <div className="space-y-2 text-xs">
-                <h3 className="font-serif font-bold text-sm text-black border-b border-black pb-1 uppercase tracking-wide">
-                  II. ĐỒ DÙNG DẠY HỌC VÀ HỌC LIỆU
-                </h3>
-                <div className="space-y-1 pl-2">
-                  <p className="text-stone-800">
-                    <strong className="text-black">- Giáo viên:</strong> {activePlan.materials.teacher.join("; ")}
-                  </p>
-                  <p className="text-stone-800">
-                    <strong className="text-black">- Học sinh:</strong> {activePlan.materials.student.join("; ")}
-                  </p>
-                </div>
-              </div>
+              {(() => {
+                const displayMaterials = sanitizeLessonMaterials(
+                  activePlan.materials?.teacher,
+                  activePlan.materials?.student,
+                  activePlan.subject,
+                  activePlan.lessonTitle,
+                  activePlan.grade,
+                  activePlan.subSubject
+                );
+                return (
+                  <div className="space-y-2 text-xs">
+                    <h3 className="font-serif font-bold text-sm text-black border-b border-black pb-1 uppercase tracking-wide">
+                      II. ĐỒ DÙNG DẠY HỌC VÀ HỌC LIỆU
+                    </h3>
+                    <div className="space-y-1 pl-2">
+                      <p className="text-stone-800">
+                        <strong className="text-black">- Giáo viên:</strong> {displayMaterials.teacher.join("; ")}
+                      </p>
+                      <p className="text-stone-800">
+                        <strong className="text-black">- Học sinh:</strong> {displayMaterials.student.join("; ")}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })()}
 
               {/* SECTION III: 2-COLUMN TEACHING ACTIVITIES TABLE */}
               <div className="space-y-3 text-xs">

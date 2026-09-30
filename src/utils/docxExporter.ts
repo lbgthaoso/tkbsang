@@ -25,6 +25,7 @@ import {
 import { cleanLessonTitleForHeader } from "../data/curriculumData";
 import { getDetailedActivitiesForLesson } from "./detailedActivitiesHelper";
 import { getDayDatesForWeek } from "./dateHelper";
+import { sanitizeLessonMaterials } from "./materialsHelper";
 
 /**
  * Universal robust file download helper for Web & sandboxed iFrame environments
@@ -1330,6 +1331,14 @@ export function buildSingleKHBDDocxElements(
   }
 
   // Section II: ĐỒ DÙNG DẠY HỌC VÀ HỌC LIỆU
+  const exportMaterials = sanitizeLessonMaterials(
+    plan.materials?.teacher,
+    plan.materials?.student,
+    plan.subject,
+    plan.lessonTitle,
+    plan.grade,
+    plan.subSubject
+  );
   elements.push(new Paragraph({ text: "", spacing: { before: 80 } }));
   elements.push(
     new Paragraph({
@@ -1340,7 +1349,7 @@ export function buildSingleKHBDDocxElements(
     new Paragraph({
       children: [
         new TextRun({ text: "- Giáo viên: ", bold: true, font, size: baseSize }),
-        new TextRun({ text: plan.materials.teacher.join("; "), font, size: baseSize }),
+        new TextRun({ text: exportMaterials.teacher.join("; "), font, size: baseSize }),
       ],
     })
   );
@@ -1348,7 +1357,7 @@ export function buildSingleKHBDDocxElements(
     new Paragraph({
       children: [
         new TextRun({ text: "- Học sinh: ", bold: true, font, size: baseSize }),
-        new TextRun({ text: plan.materials.student.join("; "), font, size: baseSize }),
+        new TextRun({ text: exportMaterials.student.join("; "), font, size: baseSize }),
       ],
     })
   );

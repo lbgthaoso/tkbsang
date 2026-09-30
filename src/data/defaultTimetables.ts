@@ -262,7 +262,7 @@ export const DEFAULT_MASTER_TIMETABLE: MasterTimetable = {
     "Thứ Hai_Chiều_1": {
       "1A1": "A.NHẠC (Hương)", "1A2": "T", "1B": "TV", "1C": "T",
       "2A1": "TV", "2A2": "TV", "2B": "ĐẠO ĐỨC (Oanh)", "2C": "GDTC (Vinh)",
-      "3A1": "TNXH", "3A2": "ĐĐ", "3B": "TNXH", "3C": "T",
+      "3A1": "TNXH", "3A2": "ĐẠO ĐỨC (Oanh)", "3B": "TNXH", "3C": "T",
       "4A1": "KH", "4A2": "KH", "4B": "GDTC (Tranh)", "4C": "KH",
       "5A": "M.THUẬT (Thy)", "5B": "M.THUẬT (My)", "5C": "KH"
     },
@@ -1008,19 +1008,22 @@ export function mapRawSubjectToScheduleItem(
   // 2.8 TĂNG CƯỜNG TIẾNG VIỆT (TC Tiếng Việt)
   else if (clean.includes("TC Tiếng Việt") || clean.includes("TCTV")) {
     subject = `TC TIẾNG VIỆT ${gradeNum}`;
-    const pInW = period;
-    lessonTitle = `Tăng cường Tiếng Việt: Rèn kĩ năng đọc trôi chảy, viết đúng chính tả & Mở rộng vốn từ (Tiết ${pInW})`;
-    curriculumPeriod = pInW;
-    integrationNotes = "Rèn luyện sự tự tin trong diễn đạt tiếng Việt và giữ gìn vở sạch chữ đẹp.";
+    const pInW = subjectOccurrenceTracker ? (subjectOccurrenceTracker["tc tiếng việt"] = (subjectOccurrenceTracker["tc tiếng việt"] || 0) + 1) : (day === "Thứ Hai" ? 1 : 2);
+    const info = getGradeCurriculumLesson(gradeNum, "tc tiếng việt", week, pInW);
+    lessonTitle = info.lessonTitle || `Tăng cường Tiếng Việt: Rèn kĩ năng đọc trôi chảy, viết đúng chính tả & Mở rộng vốn từ (Tiết ${pInW})`;
+    curriculumPeriod = (week - 1) * 2 + pInW;
+    integrationNotes = info.integrationNotes || "Rèn luyện sự tự tin trong diễn đạt tiếng Việt và giữ gìn vở sạch chữ đẹp.";
     note = "Tăng cường Tiếng Việt";
   }
 
   // 2.9 TĂNG CƯỜNG TOÁN (TC Toán)
   else if (clean.includes("TC Toán") || clean.includes("TCT")) {
     subject = `TC TOÁN ${gradeNum}`;
-    lessonTitle = `Tăng cường Toán: Củng cố kĩ năng tính nhẩm và giải bài toán có lời văn (Tuần ${week})`;
-    curriculumPeriod = 1;
-    integrationNotes = "Rèn luyện tư duy logic toán học và khả năng áp dụng vào thực tiễn.";
+    const pInW = subjectOccurrenceTracker ? (subjectOccurrenceTracker["tc toán"] = (subjectOccurrenceTracker["tc toán"] || 0) + 1) : 1;
+    const info = getGradeCurriculumLesson(gradeNum, "tc toán", week, pInW);
+    lessonTitle = info.lessonTitle || `Tăng cường Toán: Củng cố kĩ năng tính nhẩm và giải bài toán có lời văn (Tuần ${week})`;
+    curriculumPeriod = (week - 1) * 1 + pInW;
+    integrationNotes = info.integrationNotes || "Rèn luyện tư duy logic toán học và khả năng áp dụng vào thực tiễn.";
     if (!note) note = "Tăng cường Toán";
   }
 
@@ -1035,7 +1038,7 @@ export function mapRawSubjectToScheduleItem(
   }
 
   // 2.11 ĐẠO ĐỨC (ĐĐ / ĐẠO ĐỨC)
-  else if (clean.includes("ĐẠO ĐỨC") || clean.includes("ĐĐ")) {
+  else if (clean.toUpperCase().includes("ĐẠO ĐỨC") || clean.toUpperCase().includes("ĐĐ") || clean.toLowerCase().startsWith("đđ")) {
     subject = `ĐẠO ĐỨC ${gradeNum}`;
     const pInW = subjectOccurrenceTracker ? (subjectOccurrenceTracker["đạo đức"] = (subjectOccurrenceTracker["đạo đức"] || 0) + 1) : 1;
     const info = getGradeCurriculumLesson(gradeNum, "đạo đức", week, pInW);

@@ -2,6 +2,7 @@ import { Grade, LessonPlan, ScheduleItem } from "../types";
 import { sortScheduleChronologically } from "./defaultTimetables";
 import { getDetailedActivitiesForLesson } from "../utils/detailedActivitiesHelper";
 import { getTrafficSafetyForWeek } from "./trafficSafetyData";
+import { sanitizeLessonMaterials } from "../utils/materialsHelper";
 
 export interface SubjectCurriculum {
   subject: string;
@@ -179,8 +180,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Sách giáo khoa, máy chiếu trình chiếu bài thơ, tranh ảnh minh họa hạt nảy mầm."],
-      student: ["Sách giáo khoa Tiếng Việt 5, vở ghi bài."]
+      teacher: ["Bài giảng điện tử tương tác có file âm thanh/video minh họa bài đọc: Tiếng hạt nảy mầm", "Tranh ảnh phóng to minh họa quá trình hạt nảy mầm", "Bảng phụ ghi sẵn các câu thơ luyện đọc diễn cảm"],
+      student: ["Tranh ảnh hoặc tư liệu sưu tầm về sự nảy mầm và phát triển của hạt giống", "Phiếu học tập đọc hiểu bài thơ"]
     },
     activities: [
       {
@@ -238,8 +239,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Phiếu bài tập nhóm, bảng phụ ghi các đoạn văn mẫu."],
-      student: ["Vở bài tập Tiếng Việt 5, bút."]
+      teacher: ["Bài giảng điện tử tương tác (PPTX) với trò chơi ngôn ngữ củng cố đại từ", "Bảng phụ ghi các đoạn văn mẫu có chứa đại từ", "Phiếu bài tập nhóm phân loại đại từ"],
+      student: ["Thẻ từ ngữ nhận diện đại từ", "Phiếu bài tập thực hành luyện từ và câu"]
     },
     activities: [
       {
@@ -296,8 +297,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Bộ đồ dùng dạy học Toán 5, phiếu học tập nhóm."],
-      student: ["Bộ thực hành Toán 5, bảng con, nháp."]
+      teacher: ["Bài giảng điện tử tương tác (PPTX) có mô hình số hóa biểu diễn phân số", "Mô hình trực quan các hình tròn chia phần bằng nhau biểu diễn phân số", "Phiếu học tập nhóm luyện tập phân số"],
+      student: ["Mô hình các mảnh ghép hình tròn chia phần bằng nhau biểu diễn phân số", "Thẻ số, thẻ phân số phục vụ trò chơi học tập", "Phiếu bài tập thực hành phân hóa"]
     },
     activities: [
       {
@@ -354,8 +355,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Video về các anh hùng liệt sĩ, tranh ảnh hoạt động đền ơn đáp nghĩa."],
-      student: ["SGK Đạo đức 5, vở bài tập."]
+      teacher: ["Bài giảng điện tử tương tác (PPTX) trình chiếu tình huống đạo đức: Biết ơn người có công với quê hương, đất nước", "Video clip tư liệu về các anh hùng liệt sĩ, hoạt động đền ơn đáp nghĩa", "Bộ thẻ bày tỏ thái độ (xanh/đỏ) gắn bảng", "Phiếu giao nhiệm vụ xử lý tình huống"],
+      student: ["Bộ thẻ bày tỏ ý kiến cá nhân (thẻ màu xanh: tán thành, thẻ màu đỏ: không tán thành)", "Đạo cụ đơn giản sắm vai xử lý tình huống đạo đức", "Phiếu cam kết hành động thể hiện lòng biết ơn"]
     },
     activities: [
       {
@@ -413,8 +414,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Kế hoạch bài dạy, bài giảng điện tử (PPTX), bảng phụ ghi sẵn đoạn văn mẫu."],
-      student: ["Sách giáo khoa Tiếng Việt 5, vở bài tập Tiếng Việt, vở ghi bài."]
+      teacher: ["Bài giảng điện tử (PPTX) trình chiếu các đoạn văn mở bài trực tiếp và gián tiếp bài: Viết bài văn kể chuyện sáng tạo", "Bảng phụ ghi sẵn đoạn văn mẫu và bảng tiêu chí đánh giá", "Phiếu hướng dẫn lập dàn ý"],
+      student: ["Dàn ý phác thảo bài viết, sơ đồ tư duy ý tưởng", "Sổ tay tích lũy từ ngữ hay", "Phiếu tiêu chí tự đánh giá và chỉnh sửa đoạn văn"]
     },
     activities: [
       {
@@ -470,8 +471,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Bài giảng điện tử tương tác, bộ đồ dùng dạy học Toán 5, phiếu học tập."],
-      student: ["SGK Toán 5, vở bài tập Toán, bảng con, nháp."]
+      teacher: ["Bài giảng điện tử tương tác (PPTX) minh họa quy tắc cộng, trừ hai phân số khác mẫu số", "Bảng phụ ghi các bài toán mẫu và quy tắc quy đồng mẫu số", "Phiếu bài tập nhóm phân hóa"],
+      student: ["Thẻ phân số phục vụ trò chơi học tập tính nhanh", "Phiếu bài tập thực hành giải toán thực tế"]
     },
     activities: [
       {
@@ -527,8 +528,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Bản đồ Địa lí tự nhiên Việt Nam, slide bài giảng, phiếu học tập."],
-      student: ["SGK Lịch sử và Địa lí 5, vở ghi, thước kẻ."]
+      teacher: ["Bản đồ Địa lí tự nhiên Việt Nam cỡ lớn treo tường", "Bài giảng điện tử tương tác (PPTX) tích hợp video tư liệu về mạng lưới sông ngòi Việt Nam", "Phiếu học tập tìm hiểu khí hậu và sông ngòi"],
+      student: ["Tập bản đồ Địa lí, lược đồ phân bố khí hậu và sông ngòi Việt Nam", "Tranh ảnh, tư liệu sưu tầm về các dòng sông lớn (sông Hồng, sông Cửu Long)", "Phiếu học tập cá nhân"]
     },
     activities: [
       {
@@ -586,8 +587,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Hình ảnh ruộng bậc thang, video về xói mòn đất, bảng nhóm."],
-      student: ["Giấy A3, bút dạ màu."]
+      teacher: ["Bài giảng điện tử tương tác (PPTX) minh họa hình ảnh ruộng bậc thang và video về xói mòn đất bài: Ô nhiễm, xói mòn đất và bảo vệ môi trường đất", "Phiếu học tập nhóm"],
+      student: ["Tranh ảnh tư liệu sưu tầm về các biện pháp chống xói mòn và ô nhiễm đất", "Phiếu học tập ghi chép giải pháp bảo vệ đất"]
     },
     activities: [
       {
@@ -645,8 +646,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Sách giáo khoa, máy chiếu, tranh minh họa bài đọc."],
-      student: ["SGK Tiếng Việt 5, vở ghi bài."]
+      teacher: ["Bài giảng điện tử tương tác (PPTX) có tích hợp tranh ảnh phóng to bài đọc: Ngôi sao sân cỏ", "Bảng phụ ghi các từ ngữ khó đọc và câu văn dài cần luyện ngắt giọng", "Phiếu học tập đọc hiểu"],
+      student: ["Tranh ảnh sưu tầm về môn bóng đá thiếu nhi", "Phiếu học tập đọc hiểu bài đọc"]
     },
     activities: [
       {
@@ -703,8 +704,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Bảng phụ ghi đoạn luyện đọc diễn cảm, slide bài giảng."],
-      student: ["SGK Tiếng Việt 5, vở ghi."]
+      teacher: ["Bảng phụ ghi đoạn luyện đọc diễn cảm bài: Ngôi sao sân cỏ (Tiết 2)", "Bài giảng điện tử tương tác (PPTX) hướng dẫn phân tích nhân vật", "Phiếu thảo luận nhóm"],
+      student: ["Tranh ảnh minh họa bài đọc", "Phiếu ghi chép cảm nhận về nhân vật trong bài đọc"]
     },
     activities: [
       {
@@ -761,8 +762,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Mô hình hình tròn/mảnh bìa trực quan, slide tương tác."],
-      student: ["Bộ đồ dùng học Toán 5, bảng con, nháp."]
+      teacher: ["Bài giảng điện tử tương tác (PPTX) mô phỏng trực quan khái niệm hỗn số", "Mô hình hình tròn và các mảnh bìa trực quan biểu diễn hỗn số", "Phiếu bài tập phân hóa"],
+      student: ["Mô hình các mảnh ghép hình tròn chia phần bằng nhau biểu diễn hỗn số", "Thẻ số, thẻ phân số phục vụ trò chơi học tập", "Phiếu bài tập thực hành phân hóa"]
     },
     activities: [
       {
@@ -819,8 +820,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Bản báo cáo công việc mẫu, slide bài giảng."],
-      student: ["SGK Tiếng Việt 5, vở ghi bài."]
+      teacher: ["Bản báo cáo công việc mẫu in phóng to, bài giảng điện tử (PPTX) hướng dẫn cấu trúc báo cáo", "Phiếu tiêu chí đánh giá bản báo cáo công việc"],
+      student: ["Sơ đồ tư duy lập dàn ý báo cáo", "Phiếu học tập thực hành lập báo cáo công việc"]
     },
     activities: [
       {
@@ -876,8 +877,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Slide tương tác quy tắc chuyển đổi hỗn số, bảng phụ."],
-      student: ["SGK Toán 5, bảng con, vở bài tập."]
+      teacher: ["Bài giảng điện tử tương tác (PPTX) trình chiếu quy tắc chuyển đổi hỗn số sang phân số và ngược lại", "Bảng phụ ghi các ví dụ mẫu và sơ đồ tư duy"],
+      student: ["Thẻ số và thẻ phân số phục vụ trò chơi tiếp sức", "Phiếu bài tập thực hành chuyển đổi hỗn số"]
     },
     activities: [
       {
@@ -933,8 +934,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Bản đồ phân bố đất và rừng Việt Nam, tranh ảnh rừng rậm nhiệt đới, rừng ngập mặn."],
-      student: ["SGK Lịch sử và Địa lí 5, vở ghi."]
+      teacher: ["Bản đồ phân bố đất và rừng Việt Nam cỡ lớn treo tường", "Bài giảng điện tử (PPTX) tích hợp video tư liệu về rừng rậm nhiệt đới và rừng ngập mặn", "Phiếu học tập nhóm"],
+      student: ["Tập bản đồ Địa lí, lược đồ phân bố đất và rừng Việt Nam", "Tranh ảnh, tư liệu sưu tầm về rừng ngập mặn Cần Giờ, vườn quốc gia Cúc Phương", "Phiếu học tập cá nhân"]
     },
     activities: [
       {
@@ -990,8 +991,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Cốc thủy tinh, thìa, nước, muối, đường, cát, phiếu thí nghiệm."],
-      student: ["Vở thực hành Khoa học 5."]
+      teacher: ["Bài giảng điện tử tương tác (PPTX) minh họa thí nghiệm dung dịch và hỗn hợp", "Khay dụng cụ thí nghiệm: Cốc thủy tinh, thìa khuấy, nước sạch, muối, đường, cát", "Phiếu thí nghiệm nhóm"],
+      student: ["Mẫu chất an toàn theo dặn dò (chút muối ăn, đường kính)", "Khay thí nghiệm thực hành an toàn: thìa nhỏ, cốc nhựa trong, khăn lau tay", "Phiếu ghi chép kết quả thí nghiệm"]
     },
     activities: [
       {
@@ -1048,8 +1049,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Bảng mẫu chữ viết đẹp, phiếu bài tập tăng cường."],
-      student: ["Vở rèn chữ, bút mực."]
+      teacher: ["Bảng mẫu chữ viết đẹp chuẩn quy định, bài giảng điện tử (PPTX) trình chiếu quy trình viết", "Phiếu bài tập bổ trợ rèn từ và câu"],
+      student: ["Thẻ từ kiểm tra chính tả, phiếu bài tập rèn từ và câu bổ trợ"]
     },
     activities: [
       {
@@ -1106,8 +1107,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Các cuốn sách câu chuyện thể thao, mẫu Phiếu đọc sách."],
-      student: ["Sách truyện mang theo, Phiếu đọc sách."]
+      teacher: ["Một số cuốn sách thiếu nhi, tuyển tập truyện và thơ hay về chủ điểm thể thao, đoàn kết", "Mẫu Phiếu đọc sách chuẩn in sẵn cho học sinh", "Slide hướng dẫn tiêu chí chia sẻ sách"],
+      student: ["Sách truyện, báo thiếu nhi chuẩn bị trước theo chủ điểm", "Phiếu đọc sách cá nhân ghi chép cảm nhận và chi tiết yêu thích"]
     },
     activities: [
       {
@@ -1163,8 +1164,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Thước kẻ, ê-ke to trên bảng lớp, hình vẽ ôn tập."],
-      student: ["SGK Toán 5, thước kẻ, ê-ke, vở bài tập."]
+      teacher: ["Bộ thước vẽ hình khổ lớn trên bảng lớp: thước thẳng chia vạch cm/mm, ê-ke, compa lớn", "Bài giảng điện tử tương tác (PPTX) ôn tập hình học và đo lường", "Phiếu bài tập nhóm"],
+      student: ["Thước thẳng chia vạch cm/mm, ê-ke, compa (đồ dùng đo vẽ hình)", "Phiếu bài tập thực hành đo đạc và vẽ hình"]
     },
     activities: [
       {
@@ -1221,8 +1222,8 @@ export const SAMPLE_LESSON_PLANS: Record<string, LessonPlan> = {
       }
     },
     materials: {
-      teacher: ["Sổ chủ nhiệm, bảng tổng hợp thi đua tuần 3, kế hoạch tuần 4, video clip/hình ảnh về tình huống giao thông bị che khuất tầm nhìn."],
-      student: ["Sổ theo dõi cán sự lớp, phiếu tự đánh giá, tài liệu An toàn giao thông 5."]
+      teacher: ["Sổ chủ nhiệm, bảng tổng hợp thi đua tuần 3, kế hoạch tuần 4", "Video clip/hình ảnh tư liệu chuyên đề An toàn giao thông: Tình huống giao thông bị che khuất tầm nhìn", "Slide bài giảng sinh hoạt chủ đề, máy chiếu"],
+      student: ["Sổ theo dõi thi đua của ban cán sự và tổ trưởng", "Phiếu tự đánh giá rèn luyện cá nhân tuần qua", "Tài liệu An toàn giao thông 5"]
     },
     activities: [
       {
@@ -1337,12 +1338,14 @@ export function generateFullWeekLessonPlans(
     const specificCompetencies = detailed.specificCompetencies || [
       `Học sinh nắm vững kiến thức, kĩ năng cơ bản của bài học: ${item.lessonTitle}, vận dụng giải quyết bài tập và tình huống thực tiễn.`
     ];
-    const teacherMaterials = detailed.teacherMaterials || [
-      "Kế hoạch bài dạy, sách giáo khoa, bài giảng điện tử tương tác, bảng phụ."
-    ];
-    const studentMaterials = detailed.studentMaterials || [
-      "Sách giáo khoa, vở bài tập, đồ dùng học tập cá nhân."
-    ];
+    const cleanMaterials = sanitizeLessonMaterials(
+      detailed.teacherMaterials,
+      detailed.studentMaterials,
+      item.subject,
+      cleanLessonTitleForHeader(item.lessonTitle),
+      itemGrade,
+      item.subSubject
+    );
 
     const act1Teacher = detailed.act1Teacher;
     const act1Student = detailed.act1Student;
@@ -1399,8 +1402,8 @@ export function generateFullWeekLessonPlans(
         }
       },
       materials: {
-        teacher: teacherMaterials,
-        student: studentMaterials
+        teacher: cleanMaterials.teacher,
+        student: cleanMaterials.student
       },
       activities: isFridaySHL ? [
         {

@@ -1,5 +1,9 @@
 import { Grade } from "../types";
 import { DetailedLessonActivities } from "./detailedActivitiesHelper";
+import {
+  getRequiredTeacherMaterialsForLesson,
+  getRequiredStudentMaterialsForLesson,
+} from "./materialsHelper";
 
 /**
  * Pedagogical Activity Builder
@@ -30,12 +34,8 @@ export function buildPedagogicalActivities(
           "Biết nhận diện đúng từ loại/hiện tượng ngữ pháp trong câu văn, đoạn văn ngữ liệu SGK.",
           "Vận dụng linh hoạt để đặt câu đúng ngữ pháp, dùng từ chính xác, phong phú và viết đoạn văn sinh động, giàu hình ảnh."
         ],
-        teacherMaterials: [
-          "Bảng phụ chép sẵn các câu văn mẫu, thẻ từ học tập (thẻ xanh, thẻ đỏ), máy chiếu tương tác, slide bài giảng điện tử."
-        ],
-        studentMaterials: [
-          `SGK Tiếng Việt lớp ${grade}, vở ghi bài, vở bài tập Tiếng Việt, bảng con, bút viết.`
-        ],
+        teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+        studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
         act1Teacher: `Tổ chức trò chơi khởi động "Bắn tên tìm từ" hoặc "Ong non tìm mật":\n- GV chiếu 4 câu văn có các từ in đậm lên màn hình. Đặt câu hỏi: "Trong các từ in đậm trên, từ nào chỉ người, từ nào chỉ hoạt động, từ nào dùng để thay thế hoặc nối các vế câu?"\n- Gọi 3-4 HS trả lời nhanh, nhận xét tuyên dương và dẫn dắt: "Để hiểu rõ hơn về bản chất và cách sử dụng các từ ngữ này trong văn cảnh, hôm nay chúng ta cùng tìm hiểu bài: ${lessonTitle}".`,
         act1Student: `Hào hứng tham gia trò chơi, tập trung quan sát các câu văn trên bảng và giơ tay phát biểu:\n- HS 1: "Thưa cô, từ 'chăm chỉ' là từ chỉ đặc điểm ạ!"\n- HS 2: "Từ 'chúng em' dùng để thay thế cho danh từ chỉ người ạ!"\n- Cả lớp lắng nghe GV nhận xét, mở SGK Tiếng Việt lớp ${grade} và ghi tên bài vào vở.`,
         act2Teacher: `- Hướng dẫn hoạt động Khám phá (Hình thành kiến thức mới):\n  + Bước 1: Yêu cầu 1 HS đọc to phần Ngữ liệu (Nhận xét) trong SGK. Cả lớp đọc thầm theo.\n  + Bước 2: Tổ chức thảo luận nhóm 4 theo phiếu học tập trong 5 phút:\n    * Câu hỏi 1: Tìm các từ ngữ được gạch chân trong đoạn văn mẫu.\n    * Câu hỏi 2: So sánh ý nghĩa và tác dụng của các từ đó trong việc diễn đạt câu.\n    * Câu hỏi 3: Nếu thay thế hoặc bỏ các từ ngữ đó đi thì câu văn có thay đổi ý nghĩa không? Vì sao?\n  + Bước 3: Quan sát, hỗ trợ các nhóm gặp khó khăn. Mời đại diện nhóm lên báo cáo.\n  + Bước 4: Chốt kiến thức, giảng giải kĩ điểm mấu chốt và hướng dẫn HS rút ra phần Ghi nhớ trong SGK. Ghi bảng quy tắc trọng tâm.`,
@@ -55,12 +55,8 @@ export function buildPedagogicalActivities(
           "Biết quan sát, chọn lọc chi tiết đặc sắc, sử dụng từ ngữ gợi tả, gợi cảm và biện pháp tu từ thích hợp.",
           "Viết được đoạn văn/bài văn hoàn chỉnh, diễn đạt mạch lạc, đúng chính tả và bộc lộ cảm xúc chân thực."
         ],
-        teacherMaterials: [
-          "Tranh ảnh hoặc video sinh động liên quan đến chủ đề bài viết, bảng phụ tiêu chí đánh giá bài văn hay, bài văn mẫu xuất sắc của học sinh."
-        ],
-        studentMaterials: [
-          `SGK Tiếng Việt lớp ${grade}, vở tập làm văn, sổ tay tích lũy từ ngữ hay, bút viết.`
-        ],
+        teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+        studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
         act1Teacher: `Tổ chức hoạt động khởi động "Khơi nguồn cảm xúc":\n- Chiếu chùm ảnh hoặc một đoạn video ngắn 1-2 phút về chủ đề bài viết (cảnh đẹp quê hương, chân dung một người đáng mến hoặc hoạt động ý nghĩa).\n- Đặt câu hỏi: "Khi quan sát những hình ảnh trên, em ấn tượng nhất với điều gì và muốn dùng những từ ngữ nào để miêu tả lại?"\n- Gọi 2-3 HS chia sẻ cảm nhận, GV nhận xét và kết nối vào tiết học: ${lessonTitle}.`,
         act1Student: `- Chăm chú theo dõi hình ảnh/video trên màn hình.\n- HS hào hứng phát biểu: "Em rất thích vẻ đẹp rực rỡ của cánh đồng lúa chín lúc bình minh, em muốn dùng từ 'vàng xuộm', 'ngút ngàn' để tả ạ!"\n- Cả lớp ghi tên bài học vào vở tập làm văn.`,
         act2Teacher: `- Hướng dẫn Khám phá cấu trúc và cách viết:\n  + Bước 1: Yêu cầu 1 HS đọc bài văn/đoạn văn mẫu trong SGK. GV hướng dẫn HS phân tích:\n    * Phần Mở bài: Giới thiệu đối tượng theo cách trực tiếp hay gián tiếp?\n    * Phần Thân bài: Tác giả miêu tả theo trình tự nào (không gian, thời gian hay từ bao quát đến chi tiết)? Các giác quan nào đã được vận dụng (thị giác, thính giác, khứu giác)?\n    * Phần Kết bài: Bộc lộ tình cảm, suy nghĩ gì?\n  + Bước 2: Cho HS thảo luận nhóm đôi tìm những câu văn hay, từ ngữ giàu hình ảnh và các biện pháp so sánh, nhân hóa trong bài mẫu.\n  + Bước 3: Rút ra dàn ý mẫu chung và các lưu ý cần tránh khi viết (tránh liệt kê thô thiển, tránh sai chính tả).`,
@@ -79,12 +75,8 @@ export function buildPedagogicalActivities(
         "Đọc hiểu nội dung chính, các chi tiết nghệ thuật tiêu biểu và thông điệp nhân văn mà tác giả gửi gắm trong bài học.",
         "Biết đọc diễn cảm, thể hiện được cảm xúc và giọng điệu phù hợp với tính cách nhân vật hoặc cảnh sắc miêu tả."
       ],
-      teacherMaterials: [
-        "Tranh ảnh minh họa bài đọc phóng to hoặc trình chiếu slide, máy tính, bảng phụ ghi các câu văn dài cần luyện ngắt nghỉ."
-      ],
-      studentMaterials: [
-        `SGK Tiếng Việt lớp ${grade}, vở bài tập Tiếng Việt, bút chì thước kẻ.`
-      ],
+      teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+      studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
       act1Teacher: `Tổ chức khởi động bằng trò chơi "Mảnh ghép kì diệu":\n- Chiếu 3 bức tranh gợi ý liên quan đến nội dung bài đọc "${lessonTitle}".\n- Đặt câu hỏi tương tác: "Quan sát các bức tranh trên, em liên tưởng đến câu chuyện hoặc cảnh tượng nào? Hãy chia sẻ điều em biết về hình ảnh đó."\n- GV nhận xét câu trả lời của HS, tạo tâm thế hào hứng và giới thiệu vào bài đọc mới: ${lessonTitle}.`,
       act1Student: `- Quan sát hình ảnh trên màn hình, nhanh tay giơ tay phát biểu ý kiến.\n- HS chia sẻ hiểu biết ban đầu về hình ảnh và nhân vật trong bài đọc.\n- Mở SGK Tiếng Việt lớp ${grade}, chuẩn bị tâm thế bước vào giờ luyện đọc.`,
       act2Teacher: `- Hoạt động Khám phá (Luyện đọc đúng & Tìm hiểu bài):\n  + Luyện đọc thành tiếng: GV đọc mẫu toàn bài với giọng truyền cảm, rõ ràng. Hướng dẫn chia đoạn bài đọc (thường 3-4 đoạn). Cho HS đọc nối tiếp câu (GV sửa lỗi phát âm từ khó: r/d, l/n, thanh hỏi/ngã). Cho HS đọc nối tiếp đoạn trước lớp, kết hợp giải nghĩa từ mới ở phần Chú giải SGK. Luyện đọc câu dài trên bảng phụ.\n  + Tìm hiểu bài: Hướng dẫn HS đọc thầm từng đoạn và thảo luận nhóm 4 để trả lời các câu hỏi trong SGK:\n    * Câu 1: Tìm các chi tiết miêu tả sự việc/hoàn cảnh mở đầu bài đọc.\n    * Câu 2: Phân tích hành động, suy nghĩ và cảm xúc của nhân vật chính.\n    * Câu 3: Chi tiết hoặc hình ảnh nào trong bài đọc làm em xúc động hoặc ấn tượng nhất? Vì sao?\n    * Câu 4: Nêu nội dung, ý nghĩa chính của bài đọc.\n  + GV chốt lại nội dung bài học, ghi tóm tắt ý chính lên bảng.`,
@@ -106,12 +98,8 @@ export function buildPedagogicalActivities(
         "Rèn luyện kỹ năng tính toán thành thạo, chính xác; phân tích và giải quyết trọn vẹn các bài toán có lời văn gắn với thực tiễn.",
         "Phát triển năng lực tư duy logic, mô hình hóa toán học và tính cẩn thận, kiên trì trong học tập."
       ],
-      teacherMaterials: [
-        "Bộ đồ dùng dạy học Toán tiểu học (que tính, bảng phụ, mô hình phân số, thước đo hình học), bài giảng điện tử tương tác."
-      ],
-      studentMaterials: [
-        `SGK Toán lớp ${grade}, vở bài tập Toán, bảng con, phấn trắng/bút dạ, thước kẻ compa.`
-      ],
+      teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+      studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
       act1Teacher: `Tổ chức trò chơi khởi động "Đố bạn giải nhanh" hoặc "Truyền điện":\n- GV nêu 3 phép tính nhẩm hoặc đưa ra một tình huống toán học thực tế ngắn liên quan trực tiếp đến bài "${lessonTitle}".\n- Gọi bất kì học sinh nào trả lời nhanh, bạn đó được quyền "truyền điện" sang bạn tiếp theo.\n- GV nhận xét kết quả, tuyên dương và dẫn vào bài mới: "Để giúp các em nắm vững phương pháp và giải quyết các bài toán dạng này một cách nhanh chóng, chính xác, chúng ta cùng học bài: ${lessonTitle}".`,
       act1Student: `- Tham gia trò chơi hào hứng, tính nhẩm thần tốc và trả lời dõng dạc khi đến lượt.\n- Cả lớp vỗ tay chúc mừng các bạn trả lời đúng.\n- Mở SGK Toán lớp ${grade}, ghi thứ ngày tháng và tên bài học vào vở ô li.`,
       act2Teacher: `- Hoạt động Khám phá (Hình thành kiến thức mới / Quy tắc tính):\n  + Bước 1: GV nêu bài toán tình huống thực tế trong SGK lên bảng. Cho 1 HS đọc to đề bài.\n  + Bước 2: Dùng đồ dùng trực quan hoặc hình vẽ minh họa từng bước bản chất của phép tính/khái niệm mới (cách đặt tính, cách quy đồng, cách xác định hàng số, công thức diện tích/chu vi...).\n  + Bước 3: Đặt hệ thống câu hỏi gợi mở:\n    * "Muốn thực hiện phép tính này, bước đầu tiên chúng ta phải làm gì?"\n    * "Khi đặt tính, các chữ số cùng hàng cần phải được đặt như thế nào?"\n    * "Khi tính, ta thực hiện theo thứ tự từ đâu sang đâu?"\n  + Bước 4: Hướng dẫn HS thảo luận nhóm đôi để tự rút ra quy tắc tính. GV chuẩn hóa quy tắc bằng các bước cụ thể, ghi bảng rõ ràng và cho HS nhắc lại.`,
@@ -133,12 +121,8 @@ export function buildPedagogicalActivities(
         "Thực hiện được các thao tác quan sát, thí nghiệm đơn giản, thu thập và xử lý thông tin từ thực tế.",
         "Hình thành thói quen bảo vệ sức khỏe, giữ gìn môi trường sống và có ý thức ứng dụng khoa học vào đời sống."
       ],
-      teacherMaterials: [
-        "Vật mẫu thật, tranh ảnh phóng to, video khoa học thực tế, dụng cụ thí nghiệm an toàn theo bài học."
-      ],
-      studentMaterials: [
-        `SGK Khoa học / TNXH lớp ${grade}, vở ghi bài, phiếu học tập nhóm, bút dạ.`
-      ],
+      teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+      studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
       act1Teacher: `Tổ chức khởi động bằng thí nghiệm vui hoặc câu đố khám phá:\n- GV biểu diễn một hiện tượng khoa học bất ngờ hoặc chiếu đoạn clip 1 phút về hiện tượng tự nhiên trong bài "${lessonTitle}".\n- Đặt câu hỏi kích thích trí tò mò: "Điều gì đã xảy ra và tại sao lại có hiện tượng như vậy? Các em có muốn tự mình khám phá bí mật này không?"\n- GV nhận xét các suy đoán ban đầu của HS và dẫn dắt vào bài học mới.`,
       act1Student: `- Mắt chăm chú theo dõi hiện tượng, ồ lên thích thú.\n- Hào hứng đưa ra các phỏng đoán theo hiểu biết của bản thân.\n- Mở SGK, sẵn sàng tham gia các hoạt động tìm tòi khám phá.`,
       act2Teacher: `- Hướng dẫn Khám phá kiến thức qua quan sát và thí nghiệm:\n  + Bước 1: Chia lớp thành các nhóm 4 hoặc 6 HS. Giao khay dụng cụ thí nghiệm hoặc tranh ảnh quan sát cùng Phiếu học tập.\n  + Bước 2: Hướng dẫn các bước tiến hành thí nghiệm an toàn hoặc các góc quan sát chi tiết.\n  + Bước 3: Nêu câu hỏi định hướng:\n    * Hiện tượng các em quan sát thấy là gì?\n    * Nguyên nhân dẫn đến hiện tượng đó là gì?\n    * Điều đó có ý nghĩa gì đối với đời sống con người và sinh vật?\n  + Bước 4: Theo dõi, hỗ trợ các nhóm thao tác thí nghiệm, nhắc nhở giữ trật tự và vệ sinh.\n  + Bước 5: Mời đại diện nhóm lên bảng trình bày kết quả thí nghiệm/phiếu học tập. GV chốt lại kết luận khoa học chính xác.`,
@@ -160,12 +144,8 @@ export function buildPedagogicalActivities(
         "Khai thác và sử dụng thành thạo bản đồ, lược đồ, tranh ảnh và tư liệu lịch sử - địa lí.",
         "Bồi dưỡng lòng tự hào dân tộc, tình yêu quê hương đất nước và ý thức bảo vệ chủ quyền lãnh thổ quốc gia."
       ],
-      teacherMaterials: [
-        "Bản đồ hành chính Việt Nam, lược đồ trận đánh/vùng kinh tế phóng to, video tư liệu lịch sử, slide trình chiếu."
-      ],
-      studentMaterials: [
-        `SGK Lịch sử và Địa lí lớp ${grade}, vở bài tập, thước kẻ bút màu.`
-      ],
+      teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+      studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
       act1Teacher: `Tổ chức khởi động bằng trò chơi "Theo dòng lịch sử / Du lịch qua màn ảnh nhỏ":\n- Chiếu một đoạn phóng sự ngắn hoặc đưa ra câu đố về một danh nhân/địa danh liên quan trực tiếp đến bài "${lessonTitle}".\n- Đặt câu hỏi: "Nhân vật/địa danh này gắn liền với sự kiện hào hùng nào của dân tộc ta?"\n- Gọi HS trả lời, nhận xét và dẫn dắt vào bài học mới.`,
       act1Student: `- Theo dõi hình ảnh tư liệu, hào hứng giải câu đố.\n- Tự tin xung phong chia sẻ những hiểu biết ban đầu của mình.\n- Mở SGK, ghi tên bài học vào vở.`,
       act2Teacher: `- Hướng dẫn Khám phá kiến thức qua lược đồ và tư liệu:\n  + Bước 1: Yêu cầu HS đọc thông tin và quan sát hình ảnh/lược đồ trong SGK.\n  + Bước 2: Chia lớp thành các nhóm chuyên gia tìm hiểu từng nội dung:\n    * Nhóm 1 & 2: Tìm hiểu nguyên nhân, hoàn cảnh diễn ra sự kiện / đặc điểm vị trí địa hình.\n    * Nhóm 3 & 4: Tìm hiểu diễn biến chính / đặc điểm khí hậu, sông ngòi, đời sống con người.\n    * Nhóm 5 & 6: Tìm hiểu ý nghĩa lịch sử / vai trò kinh tế và biện pháp bảo tồn.\n  + Bước 3: Tổ chức cho đại diện các nhóm lên chỉ lược đồ/bản đồ và thuyết minh trước lớp.\n  + Bước 4: GV chuẩn hóa kiến thức, giảng giải các chi tiết tiêu biểu và chốt ý chính.`,
@@ -187,12 +167,8 @@ export function buildPedagogicalActivities(
         "Biết đồng tình với các hành vi đúng đắn và phê phán, không đồng tình với các hành vi sai trái, thiếu chuẩn mực.",
         "Thực hành và duy trì hành vi đạo đức tích cực trong học tập, quan hệ bạn bè, gia đình và cộng đồng xã hội."
       ],
-      teacherMaterials: [
-        "Video clip tình huống đạo đức ngắn, tranh ảnh minh họa các hành vi ứng xử, phiếu bài tập trắc nghiệm."
-      ],
-      studentMaterials: [
-        `SGK Đạo đức lớp ${grade}, vở bài tập Đạo đức, thẻ bày tỏ ý kiến (thẻ xanh: tán thành, thẻ đỏ: không tán thành).`
-      ],
+      teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+      studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
       act1Teacher: `Tổ chức khởi động bằng bài hát hoặc tiểu phẩm ngắn:\n- Cho cả lớp hát vang một bài hát vui tươi về tình cảm bạn bè/thầy cô/gia đình.\n- Đặt câu hỏi kết nối: "Lời bài hát nhắc nhở chúng ta điều gì trong cách đối xử với mọi người xung quanh?"\n- Nhận xét và giới thiệu vào bài học đạo đức: ${lessonTitle}.`,
       act1Student: `- Cả lớp hát múa nhiệt tình theo giai điệu bài hát.\n- HS trả lời câu hỏi và nêu cảm nhận về thông điệp bài hát.\n- Mở SGK Đạo đức sẵn sàng bước vào bài học.`,
       act2Teacher: `- Khám phá chuẩn mực hành vi qua câu chuyện/tình huống:\n  + Cho HS đọc câu chuyện hoặc xem tranh tình huống trong SGK.\n  + Đặt câu hỏi đàm thoại:\n    * Các nhân vật trong truyện đã làm gì?\n    * Em có đồng tình với hành vi đó không? Vì sao?\n    * Nếu là bạn trong câu chuyện, em sẽ xử sự như thế nào?\n  + Rút ra bài học đạo đức chuẩn mực và phân tích ý nghĩa của hành vi tốt.`,
@@ -214,12 +190,8 @@ export function buildPedagogicalActivities(
         "Thực hiện thành thạo các bước thao tác thực hành an toàn, đúng quy trình kĩ thuật.",
         "Phát huy tư duy sáng tạo, năng lực giải quyết vấn đề và ý thức sử dụng công nghệ an toàn, tiết kiệm."
       ],
-      teacherMaterials: [
-        "Vật liệu thực hành mẫu (bìa cứng, kéo, hồ dán) hoặc phòng máy tính, bài giảng trình chiếu quy trình các bước."
-      ],
-      studentMaterials: [
-        `SGK Công nghệ / Tin học lớp ${grade}, bộ đồ dùng học tập thực hành.`
-      ],
+      teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+      studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
       act1Teacher: `Khởi động bằng trò chơi "Nhà công nghệ nhí":\n- Chiếu hình ảnh sản phẩm công nghệ hoặc một vấn đề cần giải quyết trong đời sống liên quan đến "${lessonTitle}".\n- Hỏi: "Làm thế nào để tạo ra sản phẩm này hoặc giải quyết vấn đề trên bằng công nghệ?"\n- Nhận xét và dẫn vào bài mới.`,
       act1Student: `- Quan sát sản phẩm mẫu, háo hức đưa ra các ý tưởng sáng tạo.\n- Nhận biết mục tiêu tiết học và chuẩn bị đồ dùng thực hành.`,
       act2Teacher: `- Khám phá quy trình công nghệ / kĩ thuật:\n  + Giới thiệu sản phẩm mẫu và hướng dẫn phân tích cấu tạo, công năng.\n  + Trình chiếu và giảng giải từng bước trong quy trình thực hiện (Bước 1: Chuẩn bị -> Bước 2: Tạo hình -> Bước 3: Lắp ráp -> Bước 4: Hoàn thiện).\n  + Hướng dẫn các quy tắc an toàn khi sử dụng công cụ (kéo, dao trổ, thiết bị điện, mạng internet).`,
@@ -240,12 +212,8 @@ export function buildPedagogicalActivities(
       "Rèn luyện kỹ năng tự quản, giao tiếp tự tin, hợp tác cùng bạn bè và hình thành thói quen nề nếp tốt.",
       "Tự giác thực hiện các hành động tích cực và lan tỏa năng lượng lạc quan trong môi trường học đường."
     ],
-    teacherMaterials: [
-      "Kế hoạch tuần, loa đài âm thanh, phiếu đánh giá thi đua, máy chiếu bài giảng sinh hoạt chủ đề."
-    ],
-    studentMaterials: [
-      "Trang phục gọn gàng, khăn quàng đỏ, sổ tay đội viên, phiếu ghi chép mục tiêu."
-    ],
+    teacherMaterials: getRequiredTeacherMaterialsForLesson(subject, lessonTitle, grade, subSubject),
+    studentMaterials: getRequiredStudentMaterialsForLesson(subject, lessonTitle, grade, subSubject),
     act1Teacher: `Tổ chức hoạt động khởi động tạo không khí vui tươi, gắn kết:\n- Hướng dẫn cả lớp chơi trò chơi tập thể "Vòng tròn đoàn kết" hoặc hát vang một bài hát sinh hoạt.\n- Đặt câu hỏi kết nối vào chủ đề sinh hoạt: ${lessonTitle}.`,
     act1Student: `- Toàn thể học sinh tham gia hào hứng, đồng thanh hát và vỗ tay theo nhịp.\n- Sẵn sàng bước vào các hoạt động sinh hoạt tập thể.`,
     act2Teacher: `- Hướng dẫn Khám phá và Chia sẻ trải nghiệm theo chủ đề:\n  + Nêu mục tiêu và nội dung chính của buổi sinh hoạt.\n  + Mời các tổ/cá nhân chia sẻ những việc làm tốt, trải nghiệm thực tế hoặc kết quả thi đua tuần qua.\n  + Đặt câu hỏi định hướng để HS rút ra bài học kinh nghiệm trong học tập và rèn luyện đạo đức.`,
